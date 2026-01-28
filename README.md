@@ -1,0 +1,1 @@
+# FoodSync-Sistema-Inteligente-de-Gesti-n-de-Restaurantes-
