@@ -1,65 +1,453 @@
-import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.js file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <>
+      <section className="section-slide">
+        <div className="wrap-slick1">
+          <div className="slick1">
+            <div className="item-slick1 item1-slick1" style={{ backgroundImage: "url(/images/slide1-01.jpg)" }}>
+              <div className="wrap-content-slide1 sizefull flex-col-c-m p-l-15 p-r-15 p-t-150 p-b-170">
+                <span className="caption1-slide1 txt1 t-center animated visible-false m-b-15" data-appear="fadeInDown">Welcome to</span>
+                <h2 className="caption2-slide1 tit1 t-center animated visible-false m-b-37" data-appear="fadeInUp">Pato Place</h2>
+                <div className="wrap-btn-slide1 animated visible-false" data-appear="zoomIn">
+                  <Link href="/menu" className="btn1 flex-c-m size1 txt3 trans-0-4">Look Menu</Link>
+                </div>
+              </div>
+            </div>
+            <div className="item-slick1 item2-slick1" style={{ backgroundImage: "url(/images/master-slides-02.jpg)" }}>
+              <div className="wrap-content-slide1 sizefull flex-col-c-m p-l-15 p-r-15 p-t-150 p-b-170">
+                <span className="caption1-slide1 txt1 t-center animated visible-false m-b-15" data-appear="rollIn">Welcome to</span>
+                <h2 className="caption2-slide1 tit1 t-center animated visible-false m-b-37" data-appear="lightSpeedIn">Pato Place</h2>
+                <div className="wrap-btn-slide1 animated visible-false" data-appear="slideInUp">
+                  <Link href="/menu" className="btn1 flex-c-m size1 txt3 trans-0-4">Look Menu</Link>
+                </div>
+              </div>
+            </div>
+            <div className="item-slick1 item3-slick1" style={{ backgroundImage: "url(/images/master-slides-01.jpg)" }}>
+              <div className="wrap-content-slide1 sizefull flex-col-c-m p-l-15 p-r-15 p-t-150 p-b-170">
+                <span className="caption1-slide1 txt1 t-center animated visible-false m-b-15" data-appear="rotateInDownLeft">Welcome to</span>
+                <h2 className="caption2-slide1 tit1 t-center animated visible-false m-b-37" data-appear="rotateInUpRight">Pato Place</h2>
+                <div className="wrap-btn-slide1 animated visible-false" data-appear="rotateIn">
+                  <Link href="/menu" className="btn1 flex-c-m size1 txt3 trans-0-4">Look Menu</Link>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="wrap-slick1-dots"></div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      <section className="section-welcome bg1-pattern p-t-120 p-b-105">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-6 p-t-45 p-b-30">
+              <div className="wrap-text-welcome t-center">
+                <span className="tit2 t-center">Italian Restaurant</span>
+                <h3 className="tit3 t-center m-b-35 m-t-5">Welcome</h3>
+                <p className="t-center m-b-22 size3 m-l-r-auto">
+                  Donec quis lorem nulla. Nunc eu odio mi. Morbi nec lobortis est. Sed fringilla, nunc sed imperdiet lacinia, nisl ante egestas mi, ac facilisis ligula sem id neque.
+                </p>
+                <Link href="/about" className="txt4">
+                  Our Story
+                  <i className="fa fa-long-arrow-right m-l-10" aria-hidden="true"></i>
+                </Link>
+              </div>
+            </div>
+            <div className="col-md-6 p-b-30">
+              <div className="wrap-pic-welcome size2 bo-rad-10 hov-img-zoom m-l-r-auto">
+                <img src="/images/our-story-01.jpg" alt="IMG-OUR" />
+              </div>
+            </div>
+          </div>
         </div>
-      </main>
-    </div>
+      </section>
+
+      <section className="section-intro">
+        <div className="header-intro parallax100 t-center p-t-135 p-b-158" style={{ backgroundImage: "url(/images/bg-intro-01.jpg)" }}>
+          <span className="tit2 p-l-15 p-r-15">Discover</span>
+          <h3 className="tit4 t-center p-l-15 p-r-15 p-t-3">Pato Place</h3>
+        </div>
+        <div className="content-intro bg-white p-t-77 p-b-133">
+          <div className="container">
+            <div className="row">
+              <div className="col-md-4 p-t-30">
+                <div className="blo1">
+                  <div className="wrap-pic-blo1 bo-rad-10 hov-img-zoom">
+                    <a href="#"><img src="/images/intro-01.jpg" alt="IMG-INTRO" /></a>
+                  </div>
+                  <div className="wrap-text-blo1 p-t-35">
+                    <a href="#"><h4 className="txt5 color0-hov trans-0-4 m-b-13">Romantic Restaurant</h4></a>
+                    <p className="m-b-20">Phasellus lorem enim, luctus ut velit eget, con-vallis egestas eros.</p>
+                    <a href="#" className="txt4">Learn More <i className="fa fa-long-arrow-right m-l-10" aria-hidden="true"></i></a>
+                  </div>
+                </div>
+              </div>
+              <div className="col-md-4 p-t-30">
+                <div className="blo1">
+                  <div className="wrap-pic-blo1 bo-rad-10 hov-img-zoom">
+                    <a href="#"><img src="/images/intro-02.jpg" alt="IMG-INTRO" /></a>
+                  </div>
+                  <div className="wrap-text-blo1 p-t-35">
+                    <a href="#"><h4 className="txt5 color0-hov trans-0-4 m-b-13">Delicious Food</h4></a>
+                    <p className="m-b-20">Aliquam eget aliquam magna, quis posuere risus ac justo ipsum nibh urna</p>
+                    <a href="#" className="txt4">Learn More <i className="fa fa-long-arrow-right m-l-10" aria-hidden="true"></i></a>
+                  </div>
+                </div>
+              </div>
+              <div className="col-md-4 p-t-30">
+                <div className="blo1">
+                  <div className="wrap-pic-blo1 bo-rad-10 hov-img-zoom">
+                    <a href="#"><img src="/images/intro-04.jpg" alt="IMG-INTRO" /></a>
+                  </div>
+                  <div className="wrap-text-blo1 p-t-35">
+                    <a href="#"><h4 className="txt5 color0-hov trans-0-4 m-b-13">Red Wines You Love</h4></a>
+                    <p className="m-b-20">Sed ornare ligula eget tortor tempor, quis porta tellus dictum.</p>
+                    <a href="#" className="txt4">Learn More <i className="fa fa-long-arrow-right m-l-10" aria-hidden="true"></i></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="section-ourmenu bg2-pattern p-t-115 p-b-120">
+        <div className="container">
+          <div className="title-section-ourmenu t-center m-b-22">
+            <span className="tit2 t-center">Discover</span>
+            <h3 className="tit5 t-center m-t-2">Our Menu</h3>
+          </div>
+          <div className="row">
+            <div className="col-md-8">
+              <div className="row">
+                <div className="col-sm-6">
+                  <div className="item-ourmenu bo-rad-10 hov-img-zoom pos-relative m-t-30">
+                    <img src="/images/our-menu-01.jpg" alt="IMG-MENU" />
+                    <a href="#" className="btn2 flex-c-m txt5 ab-c-m size4">Lunch</a>
+                  </div>
+                </div>
+                <div className="col-sm-6">
+                  <div className="item-ourmenu bo-rad-10 hov-img-zoom pos-relative m-t-30">
+                    <img src="/images/our-menu-05.jpg" alt="IMG-MENU" />
+                    <a href="#" className="btn2 flex-c-m txt5 ab-c-m size5">Dinner</a>
+                  </div>
+                </div>
+                <div className="col-12">
+                  <div className="item-ourmenu bo-rad-10 hov-img-zoom pos-relative m-t-30">
+                    <img src="/images/our-menu-13.jpg" alt="IMG-MENU" />
+                    <a href="#" className="btn2 flex-c-m txt5 ab-c-m size6">Happy Hour</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="col-md-4">
+              <div className="row">
+                <div className="col-12">
+                  <div className="item-ourmenu bo-rad-10 hov-img-zoom pos-relative m-t-30">
+                    <img src="/images/our-menu-08.jpg" alt="IMG-MENU" />
+                    <a href="#" className="btn2 flex-c-m txt5 ab-c-m size7">Drink</a>
+                  </div>
+                </div>
+                <div className="col-12">
+                  <div className="item-ourmenu bo-rad-10 hov-img-zoom pos-relative m-t-30">
+                    <img src="/images/our-menu-10.jpg" alt="IMG-MENU" />
+                    <a href="#" className="btn2 flex-c-m txt5 ab-c-m size8">Starters</a>
+                  </div>
+                </div>
+                <div className="col-12">
+                  <div className="item-ourmenu bo-rad-10 hov-img-zoom pos-relative m-t-30">
+                    <img src="/images/our-menu-16.jpg" alt="IMG-MENU" />
+                    <a href="#" className="btn2 flex-c-m txt5 ab-c-m size9">Dessert</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="section-event">
+        <div className="wrap-slick2">
+          <div className="slick2">
+            <div className="item-slick2 item1-slick2" style={{ backgroundImage: "url(/images/bg-event-01.jpg)" }}>
+              <div className="wrap-content-slide2 p-t-115 p-b-208">
+                <div className="container">
+                  <div className="title-event t-center m-b-52">
+                    <span className="tit2 p-l-15 p-r-15">Upcomming</span>
+                    <h3 className="tit6 t-center p-l-15 p-r-15 p-t-3">Events</h3>
+                  </div>
+                  <div className="blo2 flex-w flex-str flex-col-c-m-lg animated visible-false" data-appear="zoomIn">
+                    <a href="#" className="wrap-pic-blo2 bg1-blo2" style={{ backgroundImage: "url(/images/event-02.jpg)" }}>
+                      <div className="time-event size10 txt6 effect1">
+                        <span className="txt-effect1 flex-c-m t-center">08:00 PM Tuesday - 21 November 2018</span>
+                      </div>
+                    </a>
+                    <div className="wrap-text-blo2 flex-col-c-m p-l-40 p-r-40 p-t-45 p-b-30">
+                      <h4 className="tit7 t-center m-b-10">Wines during specific nights</h4>
+                      <p className="t-center">Donec quis lorem nulla. Nunc eu odio mi. Morbi nec lobortis est. Sed fringilla, nunc sed imperdiet lacinia</p>
+                      <div className="flex-sa-m flex-w w-full m-t-40">
+                        <div className="size11 flex-col-c-m"><span className="dis-block t-center txt7 m-b-2 days">25</span><span className="dis-block t-center txt8">Days</span></div>
+                        <div className="size11 flex-col-c-m"><span className="dis-block t-center txt7 m-b-2 hours">12</span><span className="dis-block t-center txt8">Hours</span></div>
+                        <div className="size11 flex-col-c-m"><span className="dis-block t-center txt7 m-b-2 minutes">59</span><span className="dis-block t-center txt8">Minutes</span></div>
+                        <div className="size11 flex-col-c-m"><span className="dis-block t-center txt7 m-b-2 seconds">56</span><span className="dis-block t-center txt8">Seconds</span></div>
+                      </div>
+                      <a href="#" className="txt4 m-t-40">View Details <i className="fa fa-long-arrow-right m-l-10" aria-hidden="true"></i></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="item-slick2 item2-slick2" style={{ backgroundImage: "url(/images/bg-event-02.jpg)" }}>
+              <div className="wrap-content-slide2 p-t-115 p-b-208">
+                <div className="container">
+                  <div className="title-event t-center m-b-52">
+                    <span className="tit2 p-l-15 p-r-15">Upcomming</span>
+                    <h3 className="tit6 t-center p-l-15 p-r-15 p-t-3">Events</h3>
+                  </div>
+                  <div className="blo2 flex-w flex-str flex-col-c-m-lg animated visible-false" data-appear="fadeInDown">
+                    <a href="#" className="wrap-pic-blo2 bg2-blo2" style={{ backgroundImage: "url(/images/event-06.jpg)" }}>
+                      <div className="time-event size10 txt6 effect1"><span className="txt-effect1 flex-c-m">08:00 PM Tuesday - 21 November 2018</span></div>
+                    </a>
+                    <div className="wrap-text-blo2 flex-col-c-m p-l-40 p-r-40 p-t-45 p-b-30">
+                      <h4 className="tit7 t-center m-b-10">Wines during specific nights</h4>
+                      <p className="t-center">Donec quis lorem nulla. Nunc eu odio mi. Morbi nec lobortis est. Sed fringilla, nunc sed imperdiet lacinia</p>
+                      <div className="flex-sa-m flex-w w-full m-t-40">
+                        <div className="size11 flex-col-c-m"><span className="dis-block t-center txt7 m-b-2 days">25</span><span className="dis-block t-center txt8">Days</span></div>
+                        <div className="size11 flex-col-c-m"><span className="dis-block t-center txt7 m-b-2 hours">12</span><span className="dis-block t-center txt8">Hours</span></div>
+                        <div className="size11 flex-col-c-m"><span className="dis-block t-center txt7 m-b-2 minutes">59</span><span className="dis-block t-center txt8">Minutes</span></div>
+                        <div className="size11 flex-col-c-m"><span className="dis-block t-center txt7 m-b-2 seconds">56</span><span className="dis-block t-center txt8">Seconds</span></div>
+                      </div>
+                      <a href="#" className="txt4 m-t-40">View Details <i className="fa fa-long-arrow-right m-l-10" aria-hidden="true"></i></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="item-slick2 item3-slick2" style={{ backgroundImage: "url(/images/bg-event-04.jpg)" }}>
+              <div className="wrap-content-slide2 p-t-115 p-b-208">
+                <div className="container">
+                  <div className="title-event t-center m-b-52">
+                    <span className="tit2 p-l-15 p-r-15">Upcomming</span>
+                    <h3 className="tit6 t-center p-l-15 p-r-15 p-t-3">Events</h3>
+                  </div>
+                  <div className="blo2 flex-w flex-str flex-col-c-m-lg animated visible-false" data-appear="rotateInUpLeft">
+                    <a href="#" className="wrap-pic-blo2 bg3-blo2" style={{ backgroundImage: "url(/images/event-01.jpg)" }}>
+                      <div className="time-event size10 txt6 effect1"><span className="txt-effect1 flex-c-m">08:00 PM Tuesday - 21 November 2018</span></div>
+                    </a>
+                    <div className="wrap-text-blo2 flex-col-c-m p-l-40 p-r-40 p-t-45 p-b-30">
+                      <h4 className="tit7 t-center m-b-10">Wines during specific nights</h4>
+                      <p className="t-center">Donec quis lorem nulla. Nunc eu odio mi. Morbi nec lobortis est. Sed fringilla, nunc sed imperdiet lacinia</p>
+                      <div className="flex-sa-m flex-w w-full m-t-40">
+                        <div className="size11 flex-col-c-m"><span className="dis-block t-center txt7 m-b-2 days">25</span><span className="dis-block t-center txt8">Days</span></div>
+                        <div className="size11 flex-col-c-m"><span className="dis-block t-center txt7 m-b-2 hours">12</span><span className="dis-block t-center txt8">Hours</span></div>
+                        <div className="size11 flex-col-c-m"><span className="dis-block t-center txt7 m-b-2 minutes">59</span><span className="dis-block t-center txt8">Minutes</span></div>
+                        <div className="size11 flex-col-c-m"><span className="dis-block t-center txt7 m-b-2 seconds">56</span><span className="dis-block t-center txt8">Seconds</span></div>
+                      </div>
+                      <a href="#" className="txt4 m-t-40">View Details <i className="fa fa-long-arrow-right m-l-10" aria-hidden="true"></i></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="wrap-slick2-dots"></div>
+        </div>
+      </section>
+
+      <section className="section-booking bg1-pattern p-t-100 p-b-110">
+        <div className="container">
+          <div className="row">
+            <div className="col-lg-6 p-b-30">
+              <div className="t-center">
+                <span className="tit2 t-center">Reservation</span>
+                <h3 className="tit3 t-center m-b-35 m-t-2">Book table</h3>
+              </div>
+              <form className="wrap-form-booking">
+                <div className="row">
+                  <div className="col-md-6">
+                    <span className="txt9">Date</span>
+                    <div className="wrap-inputdate pos-relative txt10 size12 bo2 bo-rad-10 m-t-3 m-b-23">
+                      <input className="my-calendar bo-rad-10 sizefull txt10 p-l-20" type="text" name="date" />
+                      <i className="btn-calendar fa fa-calendar ab-r-m hov-pointer m-r-18" aria-hidden="true"></i>
+                    </div>
+                    <span className="txt9">Time</span>
+                    <div className="wrap-inputtime size12 bo2 bo-rad-10 m-t-3 m-b-23">
+                      <select className="selection-1" name="time">
+                        <option>9:00</option><option>9:30</option><option>10:00</option><option>10:30</option><option>11:00</option><option>11:30</option>
+                        <option>12:00</option><option>12:30</option><option>13:00</option><option>13:30</option><option>14:00</option><option>14:30</option>
+                        <option>15:00</option><option>15:30</option><option>16:00</option><option>16:30</option><option>17:00</option><option>17:30</option><option>18:00</option>
+                      </select>
+                    </div>
+                    <span className="txt9">People</span>
+                    <div className="wrap-inputpeople size12 bo2 bo-rad-10 m-t-3 m-b-23">
+                      <select className="selection-1" name="people">
+                        <option>1 person</option><option>2 people</option><option>3 people</option><option>4 people</option><option>5 people</option><option>6 people</option>
+                        <option>7 people</option><option>8 people</option><option>9 people</option><option>10 people</option><option>11 people</option><option>12 people</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className="col-md-6">
+                    <span className="txt9">Name</span>
+                    <div className="wrap-inputname size12 bo2 bo-rad-10 m-t-3 m-b-23">
+                      <input className="bo-rad-10 sizefull txt10 p-l-20" type="text" name="name" placeholder="Name" />
+                    </div>
+                    <span className="txt9">Phone</span>
+                    <div className="wrap-inputphone size12 bo2 bo-rad-10 m-t-3 m-b-23">
+                      <input className="bo-rad-10 sizefull txt10 p-l-20" type="text" name="phone" placeholder="Phone" />
+                    </div>
+                    <span className="txt9">Email</span>
+                    <div className="wrap-inputemail size12 bo2 bo-rad-10 m-t-3 m-b-23">
+                      <input className="bo-rad-10 sizefull txt10 p-l-20" type="text" name="email" placeholder="Email" />
+                    </div>
+                  </div>
+                </div>
+                <div className="wrap-btn-booking flex-c-m m-t-6">
+                  <button type="submit" className="btn3 flex-c-m size13 txt11 trans-0-4">Book Table</button>
+                </div>
+              </form>
+            </div>
+            <div className="col-lg-6 p-b-30 p-t-18">
+              <div className="wrap-pic-booking size2 bo-rad-10 hov-img-zoom m-l-r-auto">
+                <img src="/images/booking-01.jpg" alt="IMG-OUR" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="section-review p-t-115">
+        <div className="title-review t-center m-b-2">
+          <span className="tit2 p-l-15 p-r-15">Customers Say</span>
+          <h3 className="tit8 t-center p-l-20 p-r-15 p-t-3">Review</h3>
+        </div>
+        <div className="wrap-slick3">
+          <div className="slick3">
+            <div className="item-slick3 item1-slick3">
+              <div className="wrap-content-slide3 p-b-50 p-t-50">
+                <div className="container">
+                  <div className="pic-review size14 bo4 wrap-cir-pic m-l-r-auto animated visible-false" data-appear="zoomIn">
+                    <img src="/images/avatar-01.jpg" alt="IGM-AVATAR" />
+                  </div>
+                  <div className="content-review m-t-33 animated visible-false" data-appear="fadeInUp">
+                    <p className="t-center txt12 size15 m-l-r-auto">" We are lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tellus sem, mattis in pre-tium nec, fermentum viverra dui "</p>
+                    <div className="star-review fs-18 color0 flex-c-m m-t-12">
+                      <i className="fa fa-star" aria-hidden="true"></i><i className="fa fa-star p-l-1" aria-hidden="true"></i><i className="fa fa-star p-l-1" aria-hidden="true"></i><i className="fa fa-star p-l-1" aria-hidden="true"></i><i className="fa fa-star p-l-1" aria-hidden="true"></i>
+                    </div>
+                    <div className="more-review txt4 t-center animated visible-false m-t-32" data-appear="fadeInUp">Marie Simmons ˗ New York</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="item-slick3 item2-slick3">
+              <div className="wrap-content-slide3 p-b-50 p-t-50">
+                <div className="container">
+                  <div className="pic-review size14 bo4 wrap-cir-pic m-l-r-auto animated visible-false" data-appear="zoomIn">
+                    <img src="/images/avatar-04.jpg" alt="IGM-AVATAR" />
+                  </div>
+                  <div className="content-review m-t-33 animated visible-false" data-appear="fadeInUp">
+                    <p className="t-center txt12 size15 m-l-r-auto">" We are lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tellus sem, mattis in pre-tium nec, fermentum viverra dui "</p>
+                    <div className="star-review fs-18 color0 flex-c-m m-t-12">
+                      <i className="fa fa-star" aria-hidden="true"></i><i className="fa fa-star p-l-1" aria-hidden="true"></i><i className="fa fa-star p-l-1" aria-hidden="true"></i><i className="fa fa-star p-l-1" aria-hidden="true"></i><i className="fa fa-star p-l-1" aria-hidden="true"></i>
+                    </div>
+                    <div className="more-review txt4 t-center animated visible-false m-t-32" data-appear="fadeInUp">Marie Simmons ˗ New York</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="item-slick3 item3-slick3">
+              <div className="wrap-content-slide3 p-b-50 p-t-50">
+                <div className="container">
+                  <div className="pic-review size14 bo4 wrap-cir-pic m-l-r-auto animated visible-false" data-appear="zoomIn">
+                    <img src="/images/avatar-05.jpg" alt="IGM-AVATAR" />
+                  </div>
+                  <div className="content-review m-t-33 animated visible-false" data-appear="fadeInUp">
+                    <p className="t-center txt12 size15 m-l-r-auto">" We are lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tellus sem, mattis in pre-tium nec, fermentum viverra dui "</p>
+                    <div className="star-review fs-18 color0 flex-c-m m-t-12">
+                      <i className="fa fa-star" aria-hidden="true"></i><i className="fa fa-star p-l-1" aria-hidden="true"></i><i className="fa fa-star p-l-1" aria-hidden="true"></i><i className="fa fa-star p-l-1" aria-hidden="true"></i><i className="fa fa-star p-l-1" aria-hidden="true"></i>
+                    </div>
+                    <div className="more-review txt4 t-center animated visible-false m-t-32" data-appear="fadeInUp">Marie Simmons ˗ New York</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="wrap-slick3-dots m-t-30"></div>
+        </div>
+      </section>
+
+      <section className="section-video parallax100" style={{ backgroundImage: "url(/images/bg-cover-video-02.jpg)" }}>
+        <div className="content-video t-center p-t-225 p-b-250">
+          <span className="tit2 p-l-15 p-r-15">Discover</span>
+          <h3 className="tit4 t-center p-l-15 p-r-15 p-t-3">Our Video</h3>
+          <div className="btn-play ab-center size16 hov-pointer m-l-r-auto m-t-43 m-b-33" data-toggle="modal" data-target="#modal-video-01">
+            <div className="flex-c-m sizefull bo-cir bgwhite color1 hov1 trans-0-4">
+              <i className="fa fa-play fs-18 m-l-2" aria-hidden="true"></i>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="section-blog bg-white p-t-115 p-b-123">
+        <div className="container">
+          <div className="title-section-ourmenu t-center m-b-22">
+            <span className="tit2 t-center">Latest News</span>
+            <h3 className="tit5 t-center m-t-2">The Blog</h3>
+          </div>
+          <div className="row">
+            <div className="col-md-4 p-t-30">
+              <div className="blo1">
+                <div className="wrap-pic-blo1 bo-rad-10 hov-img-zoom pos-relative">
+                  <Link href="/blog-detail"><img src="/images/blog-01.jpg" alt="IMG-INTRO" /></Link>
+                  <div className="time-blog">21 Dec 2017</div>
+                </div>
+                <div className="wrap-text-blo1 p-t-35">
+                  <Link href="/blog-detail"><h4 className="txt5 color0-hov trans-0-4 m-b-13">Best Places for Wine</h4></Link>
+                  <p className="m-b-20">Phasellus lorem enim, luctus ut velit eget, con-vallis egestas eros.</p>
+                  <Link href="/blog-detail" className="txt4">Continue Reading <i className="fa fa-long-arrow-right m-l-10" aria-hidden="true"></i></Link>
+                </div>
+              </div>
+            </div>
+            <div className="col-md-4 p-t-30">
+              <div className="blo1">
+                <div className="wrap-pic-blo1 bo-rad-10 hov-img-zoom pos-relative">
+                  <Link href="/blog-detail"><img src="/images/blog-02.jpg" alt="IMG-INTRO" /></Link>
+                  <div className="time-blog">15 Dec 2017</div>
+                </div>
+                <div className="wrap-text-blo1 p-t-35">
+                  <Link href="/blog-detail"><h4 className="txt5 color0-hov trans-0-4 m-b-13">Eggs and Cheese</h4></Link>
+                  <p className="m-b-20">Duis elementum, risus sit amet lobortis nunc justo condimentum ligula, vitae feugiat</p>
+                  <Link href="/blog-detail" className="txt4">Continue Reading <i className="fa fa-long-arrow-right m-l-10" aria-hidden="true"></i></Link>
+                </div>
+              </div>
+            </div>
+            <div className="col-md-4 p-t-30">
+              <div className="blo1">
+                <div className="wrap-pic-blo1 bo-rad-10 hov-img-zoom pos-relative">
+                  <Link href="/blog-detail"><img src="/images/blog-03.jpg" alt="IMG-INTRO" /></Link>
+                  <div className="time-blog">12 Dec 2017</div>
+                </div>
+                <div className="wrap-text-blo1 p-t-35">
+                  <Link href="/blog-detail"><h4 className="txt5 color0-hov trans-0-4 m-b-13">Style the Wedding Party</h4></Link>
+                  <p className="m-b-20">Sed ornare ligula eget tortor tempor, quis porta tellus dictum.</p>
+                  <Link href="/blog-detail" className="txt4">Continue Reading <i className="fa fa-long-arrow-right m-l-10" aria-hidden="true"></i></Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div className="section-signup bg1-pattern p-t-85 p-b-85">
+        <form className="flex-c-m flex-w flex-col-c-m-lg p-l-5 p-r-5">
+          <span className="txt5 m-10">Specials Sign up</span>
+          <div className="wrap-input-signup size17 bo2 bo-rad-10 bgwhite pos-relative txt10 m-10">
+            <input className="bo-rad-10 sizefull txt10 p-l-20" type="text" name="email-address" placeholder="Email Adrress" />
+            <i className="fa fa-envelope ab-r-m m-r-18" aria-hidden="true"></i>
+          </div>
+          <button type="submit" className="btn3 flex-c-m size18 txt11 trans-0-4 m-10">Sign-up</button>
+        </form>
+      </div>
+    </>
   );
 }
