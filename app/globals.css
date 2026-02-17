@@ -1,3 +1,17 @@
 @import "tailwindcss";
 
 /* Estilos base de la plantilla Pato se cargan desde /css/main.css y /css/util.css */
+
+/* Panel admin: sidebar fijo + área de contenido */
+.admin-sidebar {
+  width: 260px;
+  min-width: 260px;
+  min-height: calc(100vh - 60px);
+  flex-shrink: 0;
+}
+.admin-shell {
+  min-height: calc(100vh - 60px);
+}
+.admin-main {
+  overflow-x: auto;
+}
