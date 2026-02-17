@@ -6,24 +6,26 @@ import { fetchWithAuth } from "@/app/lib/auth";
  * GET/POST/PATCH/DELETE /api/admin/reservations -> GET/POST/PATCH/DELETE {API_URL}/reservations
  * /api/admin/clients/1 -> {API_URL}/clients/1
  */
-export async function GET(request, { params }) {
-  return proxyRequest(request, params, "GET");
+export async function GET(request, context) {
+  return proxyRequest(request, context, "GET");
 }
 
-export async function POST(request, { params }) {
-  return proxyRequest(request, params, "POST");
+export async function POST(request, context) {
+  return proxyRequest(request, context, "POST");
 }
 
-export async function PATCH(request, { params }) {
-  return proxyRequest(request, params, "PATCH");
+export async function PATCH(request, context) {
+  return proxyRequest(request, context, "PATCH");
 }
 
-export async function DELETE(request, { params }) {
-  return proxyRequest(request, params, "DELETE");
+export async function DELETE(request, context) {
+  return proxyRequest(request, context, "DELETE");
 }
 
-async function proxyRequest(request, { params }, method) {
-  const pathSegments = params.path || [];
+async function proxyRequest(request, context, method) {
+  const rawParams = context?.params;
+  const params = rawParams != null && typeof rawParams.then === "function" ? await rawParams : rawParams ?? {};
+  const pathSegments = Array.isArray(params.path) ? params.path : [];
   const path = pathSegments.join("/");
   if (!path) {
     return NextResponse.json({ error: "Path required" }, { status: 400 });
