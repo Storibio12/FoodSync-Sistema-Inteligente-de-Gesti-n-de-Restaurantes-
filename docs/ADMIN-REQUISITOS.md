@@ -172,3 +172,63 @@ Todas las rutas bajo `/admin` excepto `/admin/login` estarán protegidas: sin to
 4. **Next.js:** Ir añadiendo módulos (menú, blog, galería, mensajes) según tengas los endpoints en tu API.
 
 Cuando tengas la URL de tu API, el método de login (y si usas JWT o sesión), y los nombres exactos de los endpoints, se puede bajar esto a código concreto en tu repo (middleware, `/admin/login`, layout admin y una página de ejemplo que consuma tu API).
+
+---
+
+## 5. Lo implementado: gestión del login
+
+### 5.1 Flujo completo
+
+| Acción | Qué ocurre |
+|--------|------------|
+| **Login** | Usuario envía email/contraseña → `POST /api/auth/login` → Next.js llama a `POST {API_URL}/auth/login` → si la API devuelve token, se guarda en cookie `admin_token` → redirección a `/admin/dashboard`. |
+| **Protección** | `middleware.js`: cualquier ruta `/admin/*` excepto `/admin/login` sin cookie `admin_token` → redirige a `/admin/login`. `/admin` o `/admin/` → redirige a `/admin/dashboard`. |
+| **Logout** | Botón "Cerrar sesión" en el header del admin → `POST /api/auth/logout` → se borra la cookie → redirección a `/admin/login`. |
+| **Comprobar sesión** | `GET /api/auth/me` devuelve `{ ok: true }` si existe la cookie; `401` si no. Útil para el cliente. |
+
+### 5.2 Archivos implicados
+
+| Archivo | Uso |
+|---------|-----|
+| `app/api/auth/login/route.js` | Recibe email/password, llama a la API, guarda token en cookie. |
+| `app/api/auth/logout/route.js` | Limpia la cookie `admin_token` (POST o GET). |
+| `app/api/auth/me/route.js` | GET: responde si hay cookie (no valida el token contra la API). |
+| `app/components/AdminHeader.js` | Cabecera del admin: enlaces Dashboard / Ver sitio y botón Cerrar sesión (no se muestra en `/admin/login`). |
+| `app/lib/auth.js` | Utilidades para servidor: `getAdminToken()`, `getAdminTokenFromRequest()`, `getAuthHeaders()`, `getApiUrl()`, `fetchWithAuth()`. Usar en Route Handlers o Server Components para llamar a la API con el token. |
+| `middleware.js` | Protege rutas `/admin/*` y redirecciones. |
+
+### 5.3 Cómo llamar a la API desde el panel (con token)
+
+**En un Route Handler (API Route):**
+
+```js
+import { getAdminTokenFromRequest, fetchWithAuth } from "@/app/lib/auth";
+
+export async function GET(request) {
+  const res = await fetchWithAuth("/reservations", { method: "GET" }, request);
+  if (res.status === 401) {
+    // Opcional: limpiar cookie y devolver 401 para que el cliente redirija a login
+    return NextResponse.json({ error: "No autorizado" }, { status: 401 });
+  }
+  const data = await res.json();
+  return NextResponse.json(data);
+}
+```
+
+**En un Server Component:**
+
+```js
+import { getAdminToken, getAuthHeaders, getApiUrl } from "@/app/lib/auth";
+
+export default async function Page() {
+  const token = await getAdminToken();
+  if (!token) redirect("/admin/login");
+  const res = await fetch(getApiUrl() + "/reservations", {
+    headers: getAuthHeaders(token),
+  });
+  const data = await res.json();
+  // ...
+}
+```
+
+La cookie se envía automáticamente en peticiones same-origin; si tu API está en otro dominio, las peticiones deben ir siempre a través de API Routes de Next.js (que leen la cookie y envían `Authorization: Bearer <token>` a la API).

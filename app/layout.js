@@ -1,5 +1,4 @@
 import "./globals.css";
-import DefaultLayout from "./components/DefaultLayout";
 
 export const metadata = {
   title: "Pato Place - Restaurant",
@@ -8,7 +7,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="icon" type="image/png" href="/images/icons/favicon.png" />
         <link rel="stylesheet" type="text/css" href="/vendor/bootstrap/css/bootstrap.min.css" />
@@ -16,7 +15,7 @@ export default function RootLayout({ children }) {
         <link rel="stylesheet" type="text/css" href="/fonts/themify/themify-icons.css" />
         <link rel="stylesheet" type="text/css" href="/vendor/animate/animate.css" />
         <link rel="stylesheet" type="text/css" href="/vendor/css-hamburgers/hamburgers.min.css" />
-        <link rel="stylesheet" type="text/css" href="/vendor/animsition/css/animsition.min.css" />
+        {/* <link rel="stylesheet" type="text/css" href="/vendor/animsition/css/animsition.min.css" /> */}
         <link rel="stylesheet" type="text/css" href="/vendor/select2/select2.min.css" />
         <link rel="stylesheet" type="text/css" href="/vendor/daterangepicker/daterangepicker.css" />
         <link rel="stylesheet" type="text/css" href="/vendor/slick/slick.css" />
@@ -24,8 +23,8 @@ export default function RootLayout({ children }) {
         <link rel="stylesheet" type="text/css" href="/css/util.css" />
         <link rel="stylesheet" type="text/css" href="/css/main.css" />
       </head>
-      <body className="animsition">
-        <DefaultLayout>{children}</DefaultLayout>
+      <body className="animsition" suppressHydrationWarning>
+        {children}
       </body>
     </html>
   );
