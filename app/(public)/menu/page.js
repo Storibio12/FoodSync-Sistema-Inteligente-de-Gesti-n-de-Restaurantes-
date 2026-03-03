@@ -1,14 +1,14 @@
 import Link from "next/link";
 
 export const metadata = {
-  title: "Menu - Pato Place",
+  title: "Menu - FoodSync",
 };
 
 export default function MenuPage() {
   return (
     <>
       <section className="bg-title-page flex-c-m p-t-160 p-b-80 p-l-15 p-r-15" style={{ backgroundImage: "url(/images/bg-title-page-01.jpg)" }}>
-        <h2 className="tit6 t-center">Pato Menu</h2>
+        <h2 className="tit6 t-center">FoodSync Menu</h2>
       </section>
 
       <section className="section-mainmenu p-t-110 p-b-70 bg1-pattern">

@@ -1,7 +1,7 @@
 import Script from "next/script";
 
 export const metadata = {
-  title: "Contact - Pato Place",
+  title: "Contact - FoodSync",
 };
 
 export default function ContactPage() {

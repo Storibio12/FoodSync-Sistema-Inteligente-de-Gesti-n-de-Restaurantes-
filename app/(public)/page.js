@@ -9,7 +9,7 @@ export default function Home() {
             <div className="item-slick1 item1-slick1" style={{ backgroundImage: "url(/images/slide1-01.jpg)" }}>
               <div className="wrap-content-slide1 sizefull flex-col-c-m p-l-15 p-r-15 p-t-150 p-b-170">
                 <span className="caption1-slide1 txt1 t-center animated visible-false m-b-15" data-appear="fadeInDown">Welcome to</span>
-                <h2 className="caption2-slide1 tit1 t-center animated visible-false m-b-37" data-appear="fadeInUp">Pato Place</h2>
+                <h2 className="caption2-slide1 tit1 t-center animated visible-false m-b-37" data-appear="fadeInUp">FoodSync</h2>
                 <div className="wrap-btn-slide1 animated visible-false" data-appear="zoomIn">
                   <Link href="/menu" className="btn1 flex-c-m size1 txt3 trans-0-4">Look Menu</Link>
                 </div>
@@ -18,7 +18,7 @@ export default function Home() {
             <div className="item-slick1 item2-slick1" style={{ backgroundImage: "url(/images/master-slides-02.jpg)" }}>
               <div className="wrap-content-slide1 sizefull flex-col-c-m p-l-15 p-r-15 p-t-150 p-b-170">
                 <span className="caption1-slide1 txt1 t-center animated visible-false m-b-15" data-appear="rollIn">Welcome to</span>
-                <h2 className="caption2-slide1 tit1 t-center animated visible-false m-b-37" data-appear="lightSpeedIn">Pato Place</h2>
+                <h2 className="caption2-slide1 tit1 t-center animated visible-false m-b-37" data-appear="lightSpeedIn">FoodSync</h2>
                 <div className="wrap-btn-slide1 animated visible-false" data-appear="slideInUp">
                   <Link href="/menu" className="btn1 flex-c-m size1 txt3 trans-0-4">Look Menu</Link>
                 </div>
@@ -27,7 +27,7 @@ export default function Home() {
             <div className="item-slick1 item3-slick1" style={{ backgroundImage: "url(/images/master-slides-01.jpg)" }}>
               <div className="wrap-content-slide1 sizefull flex-col-c-m p-l-15 p-r-15 p-t-150 p-b-170">
                 <span className="caption1-slide1 txt1 t-center animated visible-false m-b-15" data-appear="rotateInDownLeft">Welcome to</span>
-                <h2 className="caption2-slide1 tit1 t-center animated visible-false m-b-37" data-appear="rotateInUpRight">Pato Place</h2>
+                <h2 className="caption2-slide1 tit1 t-center animated visible-false m-b-37" data-appear="rotateInUpRight">FoodSync</h2>
                 <div className="wrap-btn-slide1 animated visible-false" data-appear="rotateIn">
                   <Link href="/menu" className="btn1 flex-c-m size1 txt3 trans-0-4">Look Menu</Link>
                 </div>
@@ -66,7 +66,7 @@ export default function Home() {
       <section className="section-intro">
         <div className="header-intro parallax100 t-center p-t-135 p-b-158" style={{ backgroundImage: "url(/images/bg-intro-01.jpg)" }}>
           <span className="tit2 p-l-15 p-r-15">Discover</span>
-          <h3 className="tit4 t-center p-l-15 p-r-15 p-t-3">Pato Place</h3>
+          <h3 className="tit4 t-center p-l-15 p-r-15 p-t-3">FoodSync</h3>
         </div>
         <div className="content-intro bg-white p-t-77 p-b-133">
           <div className="container">
