@@ -1,5 +1,6 @@
 @import "tailwindcss";
 
+/* Panel admin */
 .admin-sidebar {
   width: 260px;
   min-width: 260px;
@@ -12,3 +13,19 @@
 .admin-main {
   overflow-x: auto;
 }
+
+/* Ajustes de selects del template (sin Select2) */
+select.selection-1 {
+  width: 100%;
+  height: 47px;
+  border-radius: 10px;
+  border: 1px solid #d9d9d9;
+  padding: 0 20px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #666666;
+  background-color: #fff;
+  outline: none;
+  appearance: none;
+}
+
