@@ -263,49 +263,14 @@ export default function Home() {
                 <span className="tit2 t-center">Reservation</span>
                 <h3 className="tit3 t-center m-b-35 m-t-2">Book table</h3>
               </div>
-              <form className="wrap-form-booking">
-                <div className="row">
-                  <div className="col-md-6">
-                    <span className="txt9">Date</span>
-                    <div className="wrap-inputdate pos-relative txt10 size12 bo2 bo-rad-10 m-t-3 m-b-23">
-                      <input className="my-calendar bo-rad-10 sizefull txt10 p-l-20" type="text" name="date" />
-                      <i className="btn-calendar fa fa-calendar ab-r-m hov-pointer m-r-18" aria-hidden="true"></i>
-                    </div>
-                    <span className="txt9">Time</span>
-                    <div className="wrap-inputtime size12 bo2 bo-rad-10 m-t-3 m-b-23">
-                      <select className="selection-1" name="time">
-                        <option>9:00</option><option>9:30</option><option>10:00</option><option>10:30</option><option>11:00</option><option>11:30</option>
-                        <option>12:00</option><option>12:30</option><option>13:00</option><option>13:30</option><option>14:00</option><option>14:30</option>
-                        <option>15:00</option><option>15:30</option><option>16:00</option><option>16:30</option><option>17:00</option><option>17:30</option><option>18:00</option>
-                      </select>
-                    </div>
-                    <span className="txt9">People</span>
-                    <div className="wrap-inputpeople size12 bo2 bo-rad-10 m-t-3 m-b-23">
-                      <select className="selection-1" name="people">
-                        <option>1 person</option><option>2 people</option><option>3 people</option><option>4 people</option><option>5 people</option><option>6 people</option>
-                        <option>7 people</option><option>8 people</option><option>9 people</option><option>10 people</option><option>11 people</option><option>12 people</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div className="col-md-6">
-                    <span className="txt9">Name</span>
-                    <div className="wrap-inputname size12 bo2 bo-rad-10 m-t-3 m-b-23">
-                      <input className="bo-rad-10 sizefull txt10 p-l-20" type="text" name="name" placeholder="Name" />
-                    </div>
-                    <span className="txt9">Phone</span>
-                    <div className="wrap-inputphone size12 bo2 bo-rad-10 m-t-3 m-b-23">
-                      <input className="bo-rad-10 sizefull txt10 p-l-20" type="text" name="phone" placeholder="Phone" />
-                    </div>
-                    <span className="txt9">Email</span>
-                    <div className="wrap-inputemail size12 bo2 bo-rad-10 m-t-3 m-b-23">
-                      <input className="bo-rad-10 sizefull txt10 p-l-20" type="text" name="email" placeholder="Email" />
-                    </div>
-                  </div>
-                </div>
-                <div className="wrap-btn-booking flex-c-m m-t-6">
-                  <button type="submit" className="btn3 flex-c-m size13 txt11 trans-0-4">Book Table</button>
-                </div>
-              </form>
+              <p className="txt10 size22 m-b-30">
+                Reserva tu mesa eligiendo fecha, hora, número de personas y mesa disponible. Completa tu reserva en un solo paso desde nuestra página de reservas.
+              </p>
+              <div className="wrap-btn-booking flex-c-m m-t-6">
+                <Link href="/reservation" className="btn3 flex-c-m size13 txt11 trans-0-4">
+                  Hacer reserva
+                </Link>
+              </div>
             </div>
             <div className="col-lg-6 p-b-30 p-t-18">
               <div className="wrap-pic-booking size2 bo-rad-10 hov-img-zoom m-l-r-auto">
@@ -330,7 +295,7 @@ export default function Home() {
                     <img src="/images/avatar-01.jpg" alt="IGM-AVATAR" />
                   </div>
                   <div className="content-review m-t-33 animated visible-false" data-appear="fadeInUp">
-                    <p className="t-center txt12 size15 m-l-r-auto">" We are lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tellus sem, mattis in pre-tium nec, fermentum viverra dui "</p>
+                    <p className="t-center txt12 size15 m-l-r-auto"> We are lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tellus sem, mattis in pre-tium nec, fermentum viverra dui </p>
                     <div className="star-review fs-18 color0 flex-c-m m-t-12">
                       <i className="fa fa-star" aria-hidden="true"></i><i className="fa fa-star p-l-1" aria-hidden="true"></i><i className="fa fa-star p-l-1" aria-hidden="true"></i><i className="fa fa-star p-l-1" aria-hidden="true"></i><i className="fa fa-star p-l-1" aria-hidden="true"></i>
                     </div>
@@ -346,7 +311,7 @@ export default function Home() {
                     <img src="/images/avatar-04.jpg" alt="IGM-AVATAR" />
                   </div>
                   <div className="content-review m-t-33 animated visible-false" data-appear="fadeInUp">
-                    <p className="t-center txt12 size15 m-l-r-auto">" We are lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tellus sem, mattis in pre-tium nec, fermentum viverra dui "</p>
+                    <p className="t-center txt12 size15 m-l-r-auto"> We are lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tellus sem, mattis in pre-tium nec, fermentum viverra dui </p>
                     <div className="star-review fs-18 color0 flex-c-m m-t-12">
                       <i className="fa fa-star" aria-hidden="true"></i><i className="fa fa-star p-l-1" aria-hidden="true"></i><i className="fa fa-star p-l-1" aria-hidden="true"></i><i className="fa fa-star p-l-1" aria-hidden="true"></i><i className="fa fa-star p-l-1" aria-hidden="true"></i>
                     </div>
@@ -362,7 +327,7 @@ export default function Home() {
                     <img src="/images/avatar-05.jpg" alt="IGM-AVATAR" />
                   </div>
                   <div className="content-review m-t-33 animated visible-false" data-appear="fadeInUp">
-                    <p className="t-center txt12 size15 m-l-r-auto">" We are lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tellus sem, mattis in pre-tium nec, fermentum viverra dui "</p>
+                    <p className="t-center txt12 size15 m-l-r-auto"> We are lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tellus sem, mattis in pre-tium nec, fermentum viverra dui </p>
                     <div className="star-review fs-18 color0 flex-c-m m-t-12">
                       <i className="fa fa-star" aria-hidden="true"></i><i className="fa fa-star p-l-1" aria-hidden="true"></i><i className="fa fa-star p-l-1" aria-hidden="true"></i><i className="fa fa-star p-l-1" aria-hidden="true"></i><i className="fa fa-star p-l-1" aria-hidden="true"></i>
                     </div>
@@ -437,17 +402,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      <div className="section-signup bg1-pattern p-t-85 p-b-85">
-        <form className="flex-c-m flex-w flex-col-c-m-lg p-l-5 p-r-5">
-          <span className="txt5 m-10">Specials Sign up</span>
-          <div className="wrap-input-signup size17 bo2 bo-rad-10 bgwhite pos-relative txt10 m-10">
-            <input className="bo-rad-10 sizefull txt10 p-l-20" type="text" name="email-address" placeholder="Email Adrress" />
-            <i className="fa fa-envelope ab-r-m m-r-18" aria-hidden="true"></i>
-          </div>
-          <button type="submit" className="btn3 flex-c-m size18 txt11 trans-0-4 m-10">Sign-up</button>
-        </form>
-      </div>
     </>
   );
 }

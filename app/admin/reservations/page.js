@@ -140,7 +140,7 @@ export default function AdminReservationsPage() {
                       <td>
                         <span
                           className={`bo-rad-10 p-l-10 p-r-10 p-t-5 p-b-5 size12 ${
-                            isCancelled ? "bg-secondary" : "bg1"
+                            isCancelled ? "bg-secondary" : "bg-success"
                           }`}
                         >
                           {r.status ?? "pending"}
