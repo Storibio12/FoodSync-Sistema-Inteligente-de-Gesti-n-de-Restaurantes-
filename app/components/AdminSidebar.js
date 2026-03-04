@@ -19,7 +19,7 @@ export default function AdminSidebar() {
     <aside className="admin-sidebar bg1-pattern">
       <nav className="p-t-30 p-b-30 p-l-20 p-r-20">
         <div className="m-b-30">
-          <Link href="/admin/dashboard" className="tit5 txt1">
+          <Link href="/admin/dashboard" className="tit5 txt1" style={{ color: "#c0392b" }}>
             Pato Admin
           </Link>
         </div>

@@ -2,6 +2,9 @@ import { NextResponse } from "next/server";
 import { getApiUrl } from "@/app/lib/auth";
 
 export async function POST(request) {
+  const apiUrl = getApiUrl();
+  const loginUrl = `${apiUrl.replace(/\/$/, "")}/auth/login`;
+
   try {
     const body = await request.json();
     const { email, password } = body;
@@ -12,14 +15,26 @@ export async function POST(request) {
       );
     }
 
-    const apiUrl = getApiUrl();
-    const res = await fetch(`${apiUrl.replace(/\/$/, "")}/auth/login`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
+    let res;
+    try {
+      res = await fetch(loginUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+    } catch (fetchErr) {
+      return NextResponse.json(
+        {
+          error: `No se pudo conectar con la API en ${loginUrl}. Comprueba que la API esté corriendo (puerto 4000) y que .env.local tenga NEXT_PUBLIC_API_URL=http://localhost:4000/api/v1. Reinicia el servidor Next.js (npm run dev) después de cambiar .env.local.`,
+        },
+        { status: 502 }
+      );
+    }
 
-    const data = await res.json().catch(() => ({}));
+    const contentType = res.headers.get("content-type") || "";
+    const data = contentType.includes("application/json")
+      ? await res.json().catch(() => ({}))
+      : {};
 
     if (!res.ok) {
       return NextResponse.json(
@@ -48,7 +63,9 @@ export async function POST(request) {
     return response;
   } catch (err) {
     return NextResponse.json(
-      { error: "Error al conectar con el servidor" },
+      {
+        error: `Error al conectar con el servidor. URL usada: ${loginUrl}. Si tu API está en el puerto 4000, crea .env.local con NEXT_PUBLIC_API_URL=http://localhost:4000/api/v1 y reinicia Next.js.`,
+      },
       { status: 500 }
     );
   }
