@@ -233,7 +233,7 @@ export default function ReservationPage() {
                 </div>
 
                 <div className="row">
-                  {/* <div className="col-md-4">
+                  <div className="col-md-4">
                     <span className="txt9">Available tables</span>
                     <div className="wrap-btn-booking flex-c-m m-t-3 m-b-23">
                       <button
@@ -243,8 +243,8 @@ export default function ReservationPage() {
                       >
                         Buscar mesas disponibles
                       </button>
-                    </div> */}
-                  {/* </div> */}
+                    </div>
+                  </div>
                   <div className="col-md-8">
                     {tablesLoading && <p className="txt23 m-t-10">Buscando mesas...</p>}
                     {tablesError && (
