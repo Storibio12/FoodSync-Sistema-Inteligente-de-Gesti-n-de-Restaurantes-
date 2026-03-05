@@ -46,6 +46,7 @@ export async function fetchWithAuth(path, options = {}, request) {
   const baseUrl = getApiUrl();
   const url = path.startsWith("http") ? path : `${baseUrl.replace(/\/$/, "")}/${path.replace(/^\//, "")}`;
   const res = await fetch(url, {
+    cache: "no-store",
     ...options,
     headers: {
       "Content-Type": "application/json",

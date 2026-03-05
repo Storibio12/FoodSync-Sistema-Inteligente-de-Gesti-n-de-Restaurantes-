@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Gallery - Pato Place",
+  title: "Gallery - FoodSync",
 };
 
 const galleryItems = [

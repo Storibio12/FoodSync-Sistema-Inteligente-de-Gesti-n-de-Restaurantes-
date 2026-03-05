@@ -1,7 +1,8 @@
+/* eslint-disable @next/next/no-css-tags */
 import "./globals.css";
 
 export const metadata = {
-  title: "Pato Place - Restaurant",
+  title: "FoodSync - Restaurant",
   description: "Italian Restaurant",
 };
 

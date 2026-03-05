@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 export const metadata = {
-  title: "Blog Detail - Pato Place",
+  title: "Blog Detail - FoodSync",
 };
 
 export default function BlogDetailPage() {
