@@ -30,7 +30,7 @@ export default function Footer() {
             <h4 className="txt13 m-b-33">Latest twitter</h4>
             <div className="m-b-25">
               <span className="fs-13 color2 m-r-5">
-                <i className="fa fa-twitter" aria-hidden="true"></i>
+                {/* <i className="fa fa-twitter" aria-hidden="true"></i> */}
               </span>
               <a href="#" className="txt15">@colorlib</a>
               <p className="txt14 m-b-18">
@@ -41,7 +41,7 @@ export default function Footer() {
             </div>
             <div>
               <span className="fs-13 color2 m-r-5">
-                <i className="fa fa-twitter" aria-hidden="true"></i>
+                {/* <i className="fa fa-twitter" aria-hidden="true"></i> */}
               </span>
               <a href="#" className="txt15">@colorlib</a>
               <p className="txt14 m-b-18">
@@ -100,13 +100,13 @@ export default function Footer() {
         <div className="container">
           <div className="flex-sb-m flex-w p-t-22 p-b-22">
             <div className="p-t-5 p-b-5">
-              <a href="#" className="fs-15 c-white"><i className="fa fa-tripadvisor" aria-hidden="true"></i></a>
-              <a href="#" className="fs-15 c-white"><i className="fa fa-facebook m-l-18" aria-hidden="true"></i></a>
-              <a href="#" className="fs-15 c-white"><i className="fa fa-twitter m-l-18" aria-hidden="true"></i></a>
+              {/* <a href="#" className="fs-15 c-white"><i className="fa fa-tripadvisor" aria-hidden="true"></i></a> */}
+              {/* <a href="#" className="fs-15 c-white"><i className="fa fa-facebook m-l-18" aria-hidden="true"></i></a> */}
+              {/* <a href="#" className="fs-15 c-white"><i className="fa fa-twitter m-l-18" aria-hidden="true"></i></a> */}
             </div>
-            <div className="txt17 p-r-20 p-t-5 p-b-5">
+            {/* <div className="txt17 p-r-20 p-t-5 p-b-5">
               Copyright &copy; 2018 All rights reserved  |  This template is made with <i className="fa fa-heart"></i> by <a href="https://colorlib.com" target="_blank" rel="noopener noreferrer">Colorlib</a>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
