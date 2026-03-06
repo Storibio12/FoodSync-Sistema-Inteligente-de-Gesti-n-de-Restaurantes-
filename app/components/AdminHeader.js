@@ -19,7 +19,7 @@ export default function AdminHeader({ onMenuClick }) {
 
   return (
     <header className="sticky top-0 z-40 w-full bg-white/80 backdrop-blur-lg border-b border-slate-200 shadow-sm transition-all">
-      <div className="flex h-16 items-center justify-between px-6 sm:px-10">
+      <div className="flex h-14 sm:h-16 items-center justify-between px-4 sm:px-6 lg:px-10 gap-2">
         <div className="flex items-center gap-6">
           <button
             type="button"

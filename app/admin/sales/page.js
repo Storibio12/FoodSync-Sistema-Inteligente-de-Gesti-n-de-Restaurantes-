@@ -41,7 +41,7 @@ export default function AdminSalesPage() {
     <div className="space-y-6 animate-in fade-in duration-500 pb-20">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 flex-shrink-0 mb-8">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-slate-900">Historial de Ventas</h1>
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">Historial de Ventas</h1>
           <p className="text-sm text-slate-500 mt-1">Consulta el registro de todas las transacciones completadas.</p>
         </div>
       </div>
@@ -63,7 +63,7 @@ export default function AdminSalesPage() {
           </span>
         </div>
 
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto p-4 sm:p-6">
           <table className="w-full text-sm text-left whitespace-nowrap">
             <thead className="text-xs text-slate-500 uppercase bg-slate-50/80 border-b border-slate-200">
               <tr>

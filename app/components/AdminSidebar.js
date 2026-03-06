@@ -36,7 +36,7 @@ export default function AdminSidebar({ open, onClose }) {
 
   return (
     <aside
-      className={`admin-sidebar bg1-pattern fixed md:relative inset-y-0 left-0 z-40 w-[260px] flex-shrink-0 transform transition-transform duration-200 ease-out ${
+      className={`admin-sidebar bg1-pattern fixed md:relative inset-y-0 left-0 z-40 w-[260px] max-w-[85vw] md:max-w-none flex-shrink-0 flex flex-col max-h-screen transform transition-transform duration-200 ease-out ${
         open ? "translate-x-0" : "-translate-x-full md:translate-x-0"
       }`}
     >
@@ -44,23 +44,23 @@ export default function AdminSidebar({ open, onClose }) {
         type="button"
         onClick={onClose}
         aria-label="Cerrar menú"
-        className="md:hidden absolute top-4 right-4 p-2 text-slate-400 hover:text-white rounded-lg hover:bg-white/10 transition-colors"
+        className="md:hidden absolute top-4 right-4 p-2 text-slate-400 hover:text-white rounded-lg hover:bg-white/10 transition-colors z-10"
       >
         <X className="w-5 h-5" />
       </button>
-      <nav className="p-t-30 p-b-30 p-l-20 p-r-20">
-        <div className="m-b-30 admin-logo-wrap">
+      <nav className="flex-1 overflow-y-auto pt-8 sm:pt-10 pb-6 sm:pb-8 px-4 sm:px-5 min-h-0">
+        <div className="mb-6 admin-logo-wrap">
           <Link href="/admin/dashboard" className="admin-logo-link" onClick={onClose}>
             FoodSync Admin
           </Link>
         </div>
-        <ul className="list-none p-l-0">
+        <ul className="list-none p-0 space-y-2">
           {items.map(({ href, label, Icon }) => (
-            <li key={href} className="m-b-8">
+            <li key={href}>
               <Link
                 href={href}
                 onClick={onClose}
-                className={`txt4 dis-block p-t-8 p-b-8 p-l-15 bo-rad-10 color0-hov trans-0-4 flex items-center gap-3 ${
+                className={`txt4 block py-3 px-4 rounded-lg color0-hov trans-0-4 flex items-center gap-3 text-sm ${
                   pathname === href ? "!text-[#c0392b] bg-white/10" : ""
                 }`}
               >
@@ -72,7 +72,7 @@ export default function AdminSidebar({ open, onClose }) {
         </ul>
       </nav>
 
-      <div className="p-4 border-t border-white/5 bg-slate-950/30">
+      <div className="p-4 border-t border-white/5 bg-slate-950/30 flex-shrink-0">
         <div className="text-xs text-slate-500 text-center">
           FoodSync © {new Date().getFullYear()}
         </div>

@@ -59,7 +59,7 @@ export default function AdminReportsPage() {
     <div className="space-y-6 animate-in fade-in duration-500 pb-20">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 flex-shrink-0 mb-8">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-slate-900">Reportes Diarios</h1>
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">Reportes Diarios</h1>
           <p className="text-sm text-slate-500 mt-1">Consulta y registra los informes del cierre de operaciones.</p>
         </div>
         <button
@@ -85,13 +85,13 @@ export default function AdminReportsPage() {
             exit={{ opacity: 0, height: 0, marginBottom: 0 }}
             className="overflow-hidden"
           >
-            <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
-              <h3 className="text-lg font-semibold text-slate-900 mb-4 flex items-center gap-2">
+            <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 sm:p-8">
+              <h3 className="text-lg font-semibold text-slate-900 mb-5 flex items-center gap-2">
                 <FileText className="w-5 h-5 text-indigo-500" />
                 Crear Reporte Diario
               </h3>
 
-              <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4 items-end">
+              <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-5 items-end">
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-1">Fecha del Reporte</label>
                   <input
@@ -114,7 +114,7 @@ export default function AdminReportsPage() {
                   />
                 </div>
 
-                <div className="md:col-span-2 flex justify-end gap-3 mt-2 pt-4 border-t border-slate-100">
+                <div className="md:col-span-2 flex justify-end gap-3 mt-4 pt-5 border-t border-slate-100">
                   <button
                     type="button"
                     onClick={() => setShowForm(false)}
