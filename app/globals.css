@@ -7,6 +7,13 @@
   min-height: calc(100vh - 60px);
   flex-shrink: 0;
 }
+.admin-sidebar a.admin-logo-link,
+.admin-sidebar a.admin-logo-link:hover,
+.admin-sidebar a.admin-logo-link:focus,
+.admin-sidebar a.admin-logo-link:active {
+  color: #c0392b !important;
+  text-decoration: none;
+}
 .admin-shell {
   min-height: calc(100vh - 60px);
 }

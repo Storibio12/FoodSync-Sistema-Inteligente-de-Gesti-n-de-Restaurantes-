@@ -40,7 +40,7 @@ export default async function AdminDashboardPage() {
       <p className="txt4 m-b-40">Resumen del panel. Accede a cada módulo desde el menú lateral.</p>
 
       {/* Apartado: Resumen reciente (reservaciones, reportes, ventas) */}
-      <section className="dashboard-apartado m-b-50" aria-label="Resumen reciente">
+      <section className="dashboard-apartado" aria-label="Resumen reciente">
         <h2 className="tit5 m-b-25" style={{ fontSize: "0.9rem", fontWeight: 600, color: "#333", textTransform: "uppercase", letterSpacing: "0.05em" }}>
           Resumen reciente
         </h2>
@@ -107,7 +107,7 @@ export default async function AdminDashboardPage() {
 
       {/* Apartado: Accesos rápidos */}
       <section className="dashboard-apartado" aria-label="Accesos rápidos">
-      <div className="row p-t-20">
+      <div className="row p-t-5">
         <div className="col-12">
           <h3 className="tit5 m-b-20" style={{ fontSize: "0.95rem" }}>Accesos rápidos</h3>
           <div className="flex-w flex-wrap">
