@@ -57,14 +57,14 @@ export default function AdminReportsPage() {
 
   return (
     <div className="space-y-6 animate-in fade-in duration-500 pb-20">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 flex-shrink-0 mb-8">
         <div>
           <h1 className="text-2xl font-bold tracking-tight text-slate-900">Reportes Diarios</h1>
           <p className="text-sm text-slate-500 mt-1">Consulta y registra los informes del cierre de operaciones.</p>
         </div>
         <button
           onClick={() => setShowForm(!showForm)}
-          className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+          className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-[#c0392b] text-black text-sm font-medium rounded-lg hover:bg-[#a93226] hover:text-black transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-[#c0392b] focus:ring-offset-2"
         >
           {showForm ? <X className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
           {showForm ? "Cancelar registro" : "Nuevo reporte"}
@@ -91,7 +91,7 @@ export default function AdminReportsPage() {
                 Crear Reporte Diario
               </h3>
 
-              <form onSubmit={handleSubmit} className="space-y-4 max-w-2xl">
+              <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4 items-end">
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-1">Fecha del Reporte</label>
                   <input
@@ -99,22 +99,22 @@ export default function AdminReportsPage() {
                     value={form.date}
                     onChange={(e) => setForm((f) => ({ ...f, date: e.target.value }))}
                     required
-                    className="w-full sm:w-1/2 px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all"
+                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#c0392b]/50 focus:border-[#c0392b] transition-all"
                   />
                 </div>
 
-                <div>
+                <div className="md:col-span-2">
                   <label className="block text-sm font-medium text-slate-700 mb-1">Notas (Opcional)</label>
                   <textarea
                     rows={4}
                     value={form.notes}
                     onChange={(e) => setForm((f) => ({ ...f, notes: e.target.value }))}
                     placeholder="Escriba aquí cualquier observación u ocurrencia destacable del día..."
-                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all resize-y"
+                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#c0392b]/50 focus:border-[#c0392b] transition-all resize-y"
                   />
                 </div>
 
-                <div className="flex justify-end gap-3 pt-4 border-t border-slate-100">
+                <div className="md:col-span-2 flex justify-end gap-3 mt-2 pt-4 border-t border-slate-100">
                   <button
                     type="button"
                     onClick={() => setShowForm(false)}
@@ -124,7 +124,7 @@ export default function AdminReportsPage() {
                   </button>
                   <button
                     type="submit"
-                    className="px-4 py-2 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                    className="px-4 py-2 text-sm font-medium text-black bg-[#c0392b] hover:bg-[#a93226] hover:text-black rounded-lg shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-[#c0392b] focus:ring-offset-2"
                   >
                     Guardar Reporte
                   </button>
