@@ -10,7 +10,8 @@ export default function AdminUsersPage() {
   const [list, setList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [modal, setModal] = useState(null);
+  const [showForm, setShowForm] = useState(false);
+  const [editingId, setEditingId] = useState(null);
   const [form, setForm] = useState({ name: "", email: "", password: "", role_id: "" });
 
   async function load() {
@@ -38,13 +39,14 @@ export default function AdminUsersPage() {
       ...(form.role_id && { role_id: Number(form.role_id) })
     };
     try {
-      if (modal?.id != null) {
-        await adminPatch(`users/${modal.id}`, payload);
+      if (editingId) {
+        await adminPatch(`users/${editingId}`, payload);
       } else {
         if (!form.password) throw new Error("La contraseña es obligatoria para nuevo usuario");
         await adminPost("users", { ...payload, password: form.password });
       }
-      setModal(null);
+      setShowForm(false);
+      setEditingId(null);
       setForm({ name: "", email: "", password: "", role_id: "" });
       await load();
     } catch (e) {
@@ -74,22 +76,24 @@ export default function AdminUsersPage() {
   }
 
   function openEdit(u) {
-    setModal({ id: u.user_id ?? u.id });
+    setEditingId(u.user_id ?? u.id);
     setForm({ name: u.name ?? "", email: u.email ?? "", password: "", role_id: String(u.role_id ?? "") });
+    setShowForm(true);
   }
 
   return (
     <div className="space-y-6 animate-in fade-in duration-500 pb-20">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 flex-shrink-0 mb-8">
         <div>
           <h1 className="text-2xl font-bold tracking-tight text-slate-900">Usuarios del Sistema</h1>
           <p className="text-sm text-slate-500 mt-1">Administra los usuarios y sus credenciales de acceso.</p>
         </div>
         <button
-          onClick={() => { setModal({}); setForm({ name: "", email: "", password: "", role_id: "" }); }}
-          className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+          onClick={() => { setShowForm(!showForm); if (!showForm) { setEditingId(null); setForm({ name: "", email: "", password: "", role_id: "" }); } }}
+          className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-[#c0392b] text-black text-sm font-medium rounded-lg hover:bg-[#a93226] hover:text-black transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-[#c0392b] focus:ring-offset-2"
         >
-          <Plus className="w-4 h-4" /> Nuevo usuario
+          {showForm ? <X className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
+          {showForm ? "Cancelar registro" : "Nuevo usuario"}
         </button>
       </div>
 
@@ -98,6 +102,92 @@ export default function AdminUsersPage() {
           <X className="w-4 h-4 text-red-500 flex-shrink-0" /> {error}
         </div>
       )}
+
+      <AnimatePresence>
+        {showForm && (
+          <motion.div
+            initial={{ opacity: 0, height: 0, marginBottom: 0 }}
+            animate={{ opacity: 1, height: "auto", marginBottom: 24 }}
+            exit={{ opacity: 0, height: 0, marginBottom: 0 }}
+            className="overflow-hidden"
+          >
+            <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+              <h3 className="text-lg font-semibold text-slate-900 mb-4 flex items-center gap-2">
+                <UsersIcon className="w-5 h-5 text-[#c0392b]" />
+                {editingId ? "Editar usuario" : "Registrar nuevo usuario"}
+              </h3>
+
+              <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4 items-end">
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">Nombre completo</label>
+                  <input
+                    type="text"
+                    value={form.name}
+                    onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
+                    required
+                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#c0392b]/50 focus:border-[#c0392b] transition-all placeholder:text-slate-400"
+                    placeholder="Ej. Juan Pérez"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">Correo electrónico</label>
+                  <input
+                    type="email"
+                    value={form.email}
+                    onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
+                    required
+                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#c0392b]/50 focus:border-[#c0392b] transition-all placeholder:text-slate-400"
+                    placeholder="juan@ejemplo.com"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">
+                    Contraseña {editingId && <span className="text-slate-400 font-normal">(dejar en blanco para no cambiar)</span>}
+                  </label>
+                  <input
+                    type="password"
+                    value={form.password}
+                    onChange={(e) => setForm((f) => ({ ...f, password: e.target.value }))}
+                    required={!editingId}
+                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#c0392b]/50 focus:border-[#c0392b] transition-all placeholder:text-slate-400"
+                    placeholder={editingId ? "••••••••" : "Introduce una contraseña"}
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">Rol ID (Opcional)</label>
+                  <input
+                    type="number"
+                    min="1"
+                    value={form.role_id}
+                    onChange={(e) => setForm((f) => ({ ...f, role_id: e.target.value }))}
+                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#c0392b]/50 focus:border-[#c0392b] transition-all placeholder:text-slate-400"
+                    placeholder="Ej. 1"
+                  />
+                </div>
+
+                <div className="md:col-span-2 flex justify-end gap-3 mt-2 pt-4 border-t border-slate-100">
+                  <button
+                    type="button"
+                    onClick={() => { setShowForm(false); setEditingId(null); setForm({ name: "", email: "", password: "", role_id: "" }); }}
+                    className="px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-800 hover:bg-slate-100 rounded-lg transition-colors"
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    type="submit"
+                    className="px-4 py-2 text-sm font-medium text-black bg-[#c0392b] hover:bg-[#a93226] hover:text-black rounded-lg shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-[#c0392b] focus:ring-offset-2"
+                  >
+                    {editingId ? "Guardar cambios" : "Crear usuario"}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
         <div className="overflow-x-auto">
@@ -164,106 +254,6 @@ export default function AdminUsersPage() {
           </table>
         </div>
       </div>
-
-      <AnimatePresence>
-        {modal !== null && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm"
-            onClick={() => setModal(null)}
-          >
-            <motion.div
-              initial={{ scale: 0.95, opacity: 0, y: 10 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.95, opacity: 0, y: 10 }}
-              className="bg-white rounded-2xl shadow-xl w-full max-w-md overflow-hidden"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100">
-                <h3 className="text-lg font-semibold text-slate-900">
-                  {modal.id != null ? "Editar usuario" : "Registrar nuevo usuario"}
-                </h3>
-                <button
-                  onClick={() => setModal(null)}
-                  className="p-1 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-full transition-colors"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
-
-              <form onSubmit={handleSubmit} className="p-6 space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">Nombre completo</label>
-                  <input
-                    type="text"
-                    value={form.name}
-                    onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
-                    required
-                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all placeholder:text-slate-400"
-                    placeholder="Ej. Juan Pérez"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">Correo electrónico</label>
-                  <input
-                    type="email"
-                    value={form.email}
-                    onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
-                    required
-                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all placeholder:text-slate-400"
-                    placeholder="juan@ejemplo.com"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">
-                    Contraseña {modal.id != null && <span className="text-slate-400 font-normal">(dejar en blanco para no cambiar)</span>}
-                  </label>
-                  <input
-                    type="password"
-                    value={form.password}
-                    onChange={(e) => setForm((f) => ({ ...f, password: e.target.value }))}
-                    required={modal.id == null}
-                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all placeholder:text-slate-400"
-                    placeholder={modal.id != null ? "••••••••" : "Introduce una contraseña"}
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">Rol ID (Opcional)</label>
-                  <input
-                    type="number"
-                    min="1"
-                    value={form.role_id}
-                    onChange={(e) => setForm((f) => ({ ...f, role_id: e.target.value }))}
-                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all placeholder:text-slate-400"
-                    placeholder="Ej. 1"
-                  />
-                </div>
-
-                <div className="pt-4 flex items-center justify-end gap-3 border-t border-slate-100 mt-6">
-                  <button
-                    type="button"
-                    onClick={() => setModal(null)}
-                    className="px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-800 hover:bg-slate-100 rounded-lg transition-colors"
-                  >
-                    Cancelar
-                  </button>
-                  <button
-                    type="submit"
-                    className="px-4 py-2 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                  >
-                    {modal.id != null ? "Guardar cambios" : "Crear usuario"}
-                  </button>
-                </div>
-              </form>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   );
 }

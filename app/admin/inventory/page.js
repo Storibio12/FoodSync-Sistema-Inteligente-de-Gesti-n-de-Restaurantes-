@@ -69,14 +69,14 @@ export default function AdminInventoryPage() {
 
   return (
     <div className="space-y-6 animate-in fade-in duration-500 pb-20">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 flex-shrink-0 mb-8">
         <div>
           <h1 className="text-2xl font-bold tracking-tight text-slate-900">Movimientos de Inventario</h1>
           <p className="text-sm text-slate-500 mt-1">Registra y monitorea las entradas y salidas de productos.</p>
         </div>
         <button
           onClick={() => setShowForm(!showForm)}
-          className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+          className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-[#c0392b] text-black text-sm font-medium rounded-lg hover:bg-[#a93226] hover:text-black transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-[#c0392b] focus:ring-offset-2"
         >
           {showForm ? <X className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
           {showForm ? "Cancelar registro" : "Registrar movimiento"}
@@ -154,7 +154,7 @@ export default function AdminInventoryPage() {
                   </button>
                   <button
                     type="submit"
-                    className="px-4 py-2 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                    className="px-4 py-2 text-sm font-medium text-black bg-[#c0392b] hover:bg-[#a93226] hover:text-black rounded-lg shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-[#c0392b] focus:ring-offset-2"
                   >
                     Guardar Movimiento
                   </button>

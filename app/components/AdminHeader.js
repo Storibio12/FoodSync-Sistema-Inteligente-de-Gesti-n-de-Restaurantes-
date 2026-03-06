@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { LogOut, ExternalLink, Menu } from "lucide-react";
 
-export default function AdminHeader() {
+export default function AdminHeader({ onMenuClick }) {
   const pathname = usePathname();
   const router = useRouter();
   const isLoginPage = pathname === "/admin/login";
@@ -21,7 +21,12 @@ export default function AdminHeader() {
     <header className="sticky top-0 z-40 w-full bg-white/80 backdrop-blur-lg border-b border-slate-200 shadow-sm transition-all">
       <div className="flex h-16 items-center justify-between px-6 sm:px-10">
         <div className="flex items-center gap-6">
-          <button className="md:hidden p-2 -ml-2 text-slate-500 hover:text-indigo-600 rounded-md transition-colors">
+          <button
+            type="button"
+            onClick={() => onMenuClick?.()}
+            className="md:hidden p-2 -ml-2 text-slate-500 hover:text-indigo-600 rounded-md transition-colors"
+            aria-label="Abrir menú"
+          >
             <Menu className="w-6 h-6" />
           </button>
 
