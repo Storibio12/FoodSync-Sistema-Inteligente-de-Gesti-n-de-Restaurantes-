@@ -1,7 +1,6 @@
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { getAdminToken, getApiUrl, getAuthHeaders } from "@/app/lib/auth";
-import { CalendarDays, FileText, DollarSign, Users, Utensils, Package, MenuSquare } from "lucide-react";
 
 async function fetchAdmin(path) {
   const token = await getAdminToken();
@@ -40,8 +39,8 @@ export default async function AdminDashboardPage() {
       <h1 className="tit3 m-b-10">Dashboard</h1>
       <p className="txt4 m-b-40">Resumen del panel. Accede a cada módulo desde el menú lateral.</p>
 
-      {/* Apartado: Resumen reciente (reservaciones, reportes, ventas) */}
-      <section className="dashboard-apartado m-b-50" aria-label="Resumen reciente">
+      {/* Resumen reciente */}
+      <section className="dashboard-apartado m-b-20" aria-label="Resumen reciente">
         <h2 className="tit5 m-b-25" style={{ fontSize: "0.9rem", fontWeight: 600, color: "#333", textTransform: "uppercase", letterSpacing: "0.05em" }}>
           Resumen reciente
         </h2>
@@ -63,81 +62,69 @@ export default async function AdminDashboardPage() {
               <div className="m-t-auto p-t-15">
                 <Link href="/admin/reservations" className="txt4" style={{ fontSize: "0.8rem" }}>Ver todas</Link>
               </div>
-              <h2 className="text-lg font-semibold text-slate-800">Reportes Recientes</h2>
             </div>
-
-            {recentReports.length === 0 ? (
-              <div className="text-sm text-slate-400 italic py-4 text-center">No hay reportes recientes.</div>
-            ) : (
-              <ul className="space-y-3">
-                {recentReports.map((r, i) => (
-                  <li key={r.id ?? r.report_id ?? i} className="text-sm text-slate-600 flex justify-between items-center border-b border-slate-50 pb-2 last:border-0">
-                    <span className="font-medium text-slate-700">{r.date ?? r.report_date ?? "Reporte"}</span>
-                  </li>
-                ))}
-              </ul>
-            )}
           </div>
-          <Link href="/admin/reports" className="text-sm font-medium text-emerald-600 hover:text-emerald-700 mt-6 inline-block w-full text-center">
-            Ver todos los reportes &rarr;
-          </Link>
-        </div>
-
-        {/* Ventas Card */}
-        <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 flex flex-col justify-between hover:shadow-md transition-shadow">
-          <div>
-            <div className="flex items-center gap-3 mb-6">
-              <div className="p-2.5 bg-amber-50 text-amber-600 rounded-xl">
-                <DollarSign className="w-5 h-5" />
+          <div className="col-md-4 p-b-30">
+            <div className="bo-rad-10 bgwhite p-t-30 p-b-30 p-l-25 p-r-25" style={{ minHeight: "220px", display: "flex", flexDirection: "column" }}>
+              <h3 className="tit5 m-b-20" style={{ fontSize: "0.95rem" }}>Reportes recientes</h3>
+              {recentReports.length === 0 ? (
+                <p className="txt23 size12" style={{ fontSize: "0.8rem" }}>No hay reportes.</p>
+              ) : (
+                <ul className="list-none p-l-0">
+                  {recentReports.map((r, i) => (
+                    <li key={r.id ?? r.report_id ?? i} className="p-b-10 txt23 size12" style={{ fontSize: "0.8rem" }}>
+                      {r.date ?? r.report_date ?? "Reporte"}
+                    </li>
+                  ))}
+                </ul>
+              )}
+              <div className="m-t-auto p-t-15">
+                <Link href="/admin/reports" className="txt4" style={{ fontSize: "0.8rem" }}>Ver reportes</Link>
               </div>
-              <h2 className="text-lg font-semibold text-slate-800">Ventas Recientes</h2>
             </div>
-
-            {recentSales.length === 0 ? (
-              <div className="text-sm text-slate-400 italic py-4 text-center">No hay ventas registradas.</div>
-            ) : (
-              <ul className="space-y-3">
-                {recentSales.slice(0, 5).map((s, i) => (
-                  <li key={s.sale_id ?? s.id ?? i} className="text-sm text-slate-600 flex justify-between items-center border-b border-slate-50 pb-2 last:border-0">
-                    <span className="font-medium text-slate-700">Venta #{s.sale_id ?? s.id ?? i + 1}</span>
-                    {s.total != null && <span className="text-xs font-semibold text-amber-700 bg-amber-100 px-2 py-1 rounded-md">${s.total}</span>}
-                  </li>
-                ))}
-              </ul>
-            )}
           </div>
-          <Link href="/admin/sales" className="text-sm font-medium text-amber-600 hover:text-amber-700 mt-6 inline-block w-full text-center">
-            Explorar ventas &rarr;
-          </Link>
+          <div className="col-md-4 p-b-30">
+            <div className="bo-rad-10 bgwhite p-t-30 p-b-30 p-l-25 p-r-25" style={{ minHeight: "220px", display: "flex", flexDirection: "column" }}>
+              <h3 className="tit5 m-b-20" style={{ fontSize: "0.95rem" }}>Ventas recientes</h3>
+              {recentSales.length === 0 ? (
+                <p className="txt23 size12" style={{ fontSize: "0.8rem" }}>No hay ventas.</p>
+              ) : (
+                <ul className="list-none p-l-0">
+                  {recentSales.slice(0, 5).map((s, i) => (
+                    <li key={s.sale_id ?? s.id ?? i} className="p-b-10 txt23 size12" style={{ fontSize: "0.8rem" }}>
+                      Venta #{s.sale_id ?? s.id ?? i + 1} {s.total != null && `— ${s.total}`}
+                    </li>
+                  ))}
+                </ul>
+              )}
+              <div className="m-t-auto p-t-15">
+                <Link href="/admin/sales" className="txt4" style={{ fontSize: "0.8rem" }}>Ver ventas</Link>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+      </section>
 
-      {/* Accesos Rápidos */}
-      <div className="bg-slate-900 rounded-2xl shadow-lg border border-slate-800 p-8 overflow-hidden relative">
-        <div className="absolute top-0 right-0 p-12 opacity-5 pointer-events-none">
-          <Utensils className="w-64 h-64 text-white" />
-        </div>
-
-      {/* Apartado: Accesos rápidos */}
+      {/* Accesos rápidos */}
       <section className="dashboard-apartado" aria-label="Accesos rápidos">
-      <div className="row p-t-20">
-        <div className="col-12">
-          <h3 className="tit5 m-b-20" style={{ fontSize: "0.95rem" }}>Accesos rápidos</h3>
-          <div className="flex-w flex-wrap">
-            {[
-              { href: "/admin/reservations", label: "Reservaciones" },
-              { href: "/admin/clients", label: "Clientes" },
-              { href: "/admin/tables", label: "Mesas" },
-              { href: "/admin/menu", label: "Menú" },
-              { href: "/admin/sales", label: "Ventas" },
-            ].map(({ href, label }) => (
-              <Link key={href} href={href} className="btn3 flex-c-m size13 txt11 trans-0-4 m-r-15 m-b-12" style={{ fontSize: "0.75rem", padding: "5px 10px" }}>
-                {label}
-              </Link>
-            ))}
+        <div className="row p-t-5">
+          <div className="col-12">
+            <h3 className="tit5 m-b-20" style={{ fontSize: "0.95rem" }}>Accesos rápidos</h3>
+            <div className="flex-w flex-wrap">
+              {[
+                { href: "/admin/reservations", label: "Reservaciones" },
+                { href: "/admin/clients", label: "Clientes" },
+                { href: "/admin/tables", label: "Mesas" },
+                { href: "/admin/menu", label: "Menú" },
+                { href: "/admin/sales", label: "Ventas" },
+              ].map(({ href, label }) => (
+                <Link key={href} href={href} className="btn3 flex-c-m size13 txt11 trans-0-4 m-r-15 m-b-12" style={{ fontSize: "0.75rem", padding: "5px 10px" }}>
+                  {label}
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
       </section>
     </div>
   );
