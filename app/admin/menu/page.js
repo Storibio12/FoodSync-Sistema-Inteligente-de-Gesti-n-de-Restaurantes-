@@ -2,6 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { adminGet, adminPost, adminPatch, adminDelete } from "@/app/lib/adminApi";
+import Swal from "sweetalert2";
+import { Plus, Edit2, Trash2, X, PackageOpen } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function AdminMenuPage() {
   const [list, setList] = useState([]);
@@ -49,7 +52,17 @@ export default function AdminMenuPage() {
   }
 
   async function handleDelete(id) {
-    if (!confirm("¿Eliminar este producto?")) return;
+    const result = await Swal.fire({
+      title: "¿Estás seguro?",
+      text: "¿Eliminar este producto?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#4f46e5",
+      cancelButtonColor: "#ef4444",
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: "Cancelar"
+    });
+    if (!result.isConfirmed) return;
     setError("");
     try {
       await adminDelete(`products/${id}`);
@@ -70,77 +83,196 @@ export default function AdminMenuPage() {
   }
 
   return (
-    <div className="container">
-      <h1 className="tit3 m-b-35">Menú / Productos</h1>
-      {error && <p className="txt4 m-b-20" style={{ color: "#c0392b" }}>{error}</p>}
-
-      <div className="m-b-30">
-        <button type="button" className="btn3 flex-c-m size13 txt11 trans-0-4" onClick={() => { setModal({}); setForm({ name: "", unit_price: "", stock: "", min_stock: "" }); }}>Nuevo producto</button>
+    <div className="space-y-6 animate-in fade-in duration-500 pb-20">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-bold tracking-tight text-slate-900">Menú / Productos</h1>
+          <p className="text-sm text-slate-500 mt-1">Gestiona los platillos y el inventario de productos.</p>
+        </div>
+        <button
+          onClick={() => { setModal({}); setForm({ name: "", unit_price: "", stock: "", min_stock: "" }); }}
+          className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+        >
+          <Plus className="w-4 h-4" /> Nuevo producto
+        </button>
       </div>
 
-      <div className="table-responsive bo-rad-10 bgwhite overflow-hidden">
-        <table className="table table-striped m-b-0">
-          <thead>
-            <tr className="txt9">
-              <th className="p-l-20 p-t-20 p-b-20">ID</th>
-              <th>Nombre</th>
-              <th>Precio unit.</th>
-              <th>Stock</th>
-              <th>Stock mín.</th>
-              <th className="p-r-20">Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {list.length === 0 && !loading ? (
-              <tr><td colSpan={6} className="p-l-20 p-t-20 p-b-20 txt23">No hay productos.</td></tr>
-            ) : (
-              list.map((p) => (
-                <tr key={p.product_id ?? p.id}>
-                  <td className="p-l-20 p-t-15 p-b-15">{p.product_id ?? p.id}</td>
-                  <td>{p.name ?? "—"}</td>
-                  <td>{p.unit_price != null ? p.unit_price : "—"}</td>
-                  <td>{p.stock != null ? p.stock : "—"}</td>
-                  <td>{p.min_stock != null ? p.min_stock : "—"}</td>
-                  <td className="p-r-20">
-                    <button type="button" className="btn3 flex-c-m size12 txt11 trans-0-4 m-r-5" onClick={() => openEdit(p)}>Editar</button>
-                    <button type="button" className="btn3 flex-c-m size12 txt11 trans-0-4" style={{ background: "#c0392b" }} onClick={() => handleDelete(p.product_id ?? p.id)}>Eliminar</button>
-                  </td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
-      </div>
-
-      {modal !== null && (
-        <div className="admin-modal-overlay" style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.5)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 9999 }} onClick={() => setModal(null)}>
-          <div className="bo-rad-10 bgwhite p-l-50 p-r-50 p-t-50 p-b-50" style={{ minWidth: 320 }} onClick={(e) => e.stopPropagation()}>
-            <h3 className="tit5 m-b-25">{modal.id != null ? "Editar producto" : "Nuevo producto"}</h3>
-            <form onSubmit={handleSubmit}>
-              <span className="txt9">Nombre</span>
-              <div className="wrap-inputname size12 bo2 bo-rad-10 m-t-3 m-b-23">
-                <input className="bo-rad-10 sizefull txt10 p-l-20" value={form.name} onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))} required />
-              </div>
-              <span className="txt9">Precio unitario</span>
-              <div className="size12 bo2 bo-rad-10 m-t-3 m-b-23">
-                <input className="bo-rad-10 sizefull txt10 p-l-20" type="number" step="0.01" min="0" value={form.unit_price} onChange={(e) => setForm((f) => ({ ...f, unit_price: e.target.value }))} required />
-              </div>
-              <span className="txt9">Stock (opcional)</span>
-              <div className="size12 bo2 bo-rad-10 m-t-3 m-b-23">
-                <input className="bo-rad-10 sizefull txt10 p-l-20" type="number" min="0" value={form.stock} onChange={(e) => setForm((f) => ({ ...f, stock: e.target.value }))} />
-              </div>
-              <span className="txt9">Stock mínimo (opcional)</span>
-              <div className="size12 bo2 bo-rad-10 m-t-3 m-b-23">
-                <input className="bo-rad-10 sizefull txt10 p-l-20" type="number" min="0" value={form.min_stock} onChange={(e) => setForm((f) => ({ ...f, min_stock: e.target.value }))} />
-              </div>
-              <div className="flex-w">
-                <button type="submit" className="btn3 flex-c-m size13 txt11 trans-0-4 m-r-10">Guardar</button>
-                <button type="button" className="btn3 flex-c-m size13 txt11 trans-0-4" style={{ background: "#666" }} onClick={() => setModal(null)}>Cerrar</button>
-              </div>
-            </form>
-          </div>
+      {error && (
+        <div className="p-4 bg-red-50 text-red-700 border border-red-200 rounded-lg text-sm flex items-center gap-2">
+          <X className="w-4 h-4 text-red-500 flex-shrink-0" /> {error}
         </div>
       )}
+
+      <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm text-left whitespace-nowrap">
+            <thead className="text-xs text-slate-500 uppercase bg-slate-50/80 border-b border-slate-200">
+              <tr>
+                <th scope="col" className="px-6 py-4 font-medium">ID</th>
+                <th scope="col" className="px-6 py-4 font-medium">Nombre</th>
+                <th scope="col" className="px-6 py-4 font-medium text-right">Precio unitario</th>
+                <th scope="col" className="px-6 py-4 font-medium text-right">Stock</th>
+                <th scope="col" className="px-6 py-4 font-medium text-right">Stock mín.</th>
+                <th scope="col" className="px-6 py-4 font-medium text-right">Acciones</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100">
+              {loading ? (
+                <tr>
+                  <td colSpan={6} className="px-6 py-12 text-center text-slate-400">
+                    <div className="flex items-center justify-center gap-2">
+                      <div className="w-4 h-4 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin" />
+                      Cargando productos...
+                    </div>
+                  </td>
+                </tr>
+              ) : list.length === 0 ? (
+                <tr>
+                  <td colSpan={6} className="px-6 py-16 text-center text-slate-400">
+                    <PackageOpen className="w-12 h-12 mx-auto mb-3 text-slate-300" />
+                    <p>No hay productos registrados en el menú.</p>
+                  </td>
+                </tr>
+              ) : (
+                list.map((p) => (
+                  <tr key={p.product_id ?? p.id} className="hover:bg-slate-50 transition-colors group">
+                    <td className="px-6 py-4 font-medium text-slate-600">#{p.product_id ?? p.id}</td>
+                    <td className="px-6 py-4 text-slate-900 font-medium">{p.name ?? "—"}</td>
+                    <td className="px-6 py-4 text-right text-slate-600 font-medium">${p.unit_price != null ? Number(p.unit_price).toFixed(2) : "0.00"}</td>
+                    <td className="px-6 py-4 text-right">
+                      <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${p.stock <= (p.min_stock || 0) ? 'bg-red-100 text-red-800' : 'bg-emerald-100 text-emerald-800'}`}>
+                        {p.stock != null ? p.stock : "—"}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 text-right text-slate-500">{p.min_stock != null ? p.min_stock : "—"}</td>
+                    <td className="px-6 py-4 text-right">
+                      <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <button
+                          onClick={() => openEdit(p)}
+                          className="p-1.5 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-md transition-colors"
+                          title="Editar producto"
+                        >
+                          <Edit2 className="w-4 h-4" />
+                        </button>
+                        <button
+                          onClick={() => handleDelete(p.product_id ?? p.id)}
+                          className="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-md transition-colors"
+                          title="Eliminar producto"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <AnimatePresence>
+        {modal !== null && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm"
+            onClick={() => setModal(null)}
+          >
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0, y: 10 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.95, opacity: 0, y: 10 }}
+              className="bg-white rounded-2xl shadow-xl w-full max-w-md overflow-hidden"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100">
+                <h3 className="text-lg font-semibold text-slate-900">
+                  {modal.id != null ? "Editar producto" : "Registrar nuevo producto"}
+                </h3>
+                <button
+                  onClick={() => setModal(null)}
+                  className="p-1 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-full transition-colors"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              <form onSubmit={handleSubmit} className="p-6 space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">Nombre del producto</label>
+                  <input
+                    type="text"
+                    value={form.name}
+                    onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
+                    required
+                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all placeholder:text-slate-400"
+                    placeholder="Ej. Pizza Margarita"
+                  />
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 mb-1">Precio Unitario ($)</label>
+                    <input
+                      type="number"
+                      step="0.01"
+                      min="0"
+                      value={form.unit_price}
+                      onChange={(e) => setForm((f) => ({ ...f, unit_price: e.target.value }))}
+                      required
+                      className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all"
+                      placeholder="0.00"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 mb-1">Stock Actual</label>
+                    <input
+                      type="number"
+                      min="0"
+                      value={form.stock}
+                      onChange={(e) => setForm((f) => ({ ...f, stock: e.target.value }))}
+                      className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all"
+                      placeholder="Opcional"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 mb-1">Stock Mínimo</label>
+                    <input
+                      type="number"
+                      min="0"
+                      value={form.min_stock}
+                      onChange={(e) => setForm((f) => ({ ...f, min_stock: e.target.value }))}
+                      className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all"
+                      placeholder="Opcional"
+                    />
+                  </div>
+                </div>
+
+                <div className="pt-4 flex items-center justify-end gap-3 border-t border-slate-100 mt-6">
+                  <button
+                    type="button"
+                    onClick={() => setModal(null)}
+                    className="px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-800 hover:bg-slate-100 rounded-lg transition-colors"
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    type="submit"
+                    className="px-4 py-2 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                  >
+                    {modal.id != null ? "Guardar cambios" : "Crear producto"}
+                  </button>
+                </div>
+              </form>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

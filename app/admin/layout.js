@@ -1,4 +1,3 @@
-import AdminHeader from "../components/AdminHeader";
 import AdminShell from "../components/AdminShell";
 
 export const metadata = {
@@ -7,8 +6,7 @@ export const metadata = {
 
 export default function AdminLayout({ children }) {
   return (
-    <div className="wrap-admin">
-      <AdminHeader />
+    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans antialiased selection:bg-indigo-500 selection:text-white">
       <AdminShell>{children}</AdminShell>
     </div>
   );

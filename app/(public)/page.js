@@ -283,7 +283,7 @@ export default function Home() {
 
       <section className="section-review p-t-115">
         <div className="title-review t-center m-b-2">
-          <span className="tit2 p-l-15 p-r-15">Customers Say</span>
+          {/* <span className="tit2 p-l-15 p-r-15">Customers Say</span> */}
           <h3 className="tit8 t-center p-l-20 p-r-15 p-t-3">Review</h3>
         </div>
         <div className="wrap-slick3">

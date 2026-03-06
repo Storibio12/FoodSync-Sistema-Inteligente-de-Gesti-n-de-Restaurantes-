@@ -1,7 +1,9 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
 import AdminSidebar from "./AdminSidebar";
+import AdminHeader from "./AdminHeader";
 
 export default function AdminShell({ children }) {
   const pathname = usePathname();
@@ -12,11 +14,25 @@ export default function AdminShell({ children }) {
   }
 
   return (
-    <div className="admin-shell dis-flex">
+    <div className="flex h-screen overflow-hidden bg-slate-50">
       <AdminSidebar />
-      <main className="admin-main flex-1 p-t-40 p-b-85 p-l-30 p-r-30">
-        {children}
-      </main>
+      <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
+        <AdminHeader />
+        <main className="flex-1 overflow-y-auto overflow-x-hidden relative focus:outline-none">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={pathname}
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -15 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              className="p-6 sm:p-10 max-w-7xl mx-auto w-full"
+            >
+              {children}
+            </motion.div>
+          </AnimatePresence>
+        </main>
+      </div>
     </div>
   );
 }
