@@ -234,55 +234,6 @@ export default function ReservationPage() {
 
                 <div className="row">
                   <div className="col-md-4">
-                    <span className="txt9">Available tables</span>
-                    <div className="wrap-btn-booking flex-c-m m-t-3 m-b-23">
-                      <button
-                        type="button"
-                        className="btn3 flex-c-m size13 txt11 trans-0-4"
-                        onClick={fetchTables}
-                      >
-                        Buscar mesas disponibles
-                      </button>
-                    </div>
-                  </div>
-                  <div className="col-md-8">
-                    {tablesLoading && <p className="txt23 m-t-10">Buscando mesas...</p>}
-                    {tablesError && (
-                      <p className="txt23 m-t-10" style={{ color: "#c0392b" }}>
-                        {tablesError}
-                      </p>
-                    )}
-                    {searched && !tablesLoading && !tablesError && tables.length === 0 && (
-                      <p className="txt23 m-t-10">No hay mesas disponibles para ese horario.</p>
-                    )}
-                  </div>
-                </div>
-
-                {tables.length > 0 && (
-                  <div className="row">
-                    <div className="col-md-4">
-                      <span className="txt9">Mesa disponible</span>
-                      <div className="wrap-inputpeople size12 bo2 bo-rad-10 m-t-3 m-b-23">
-                        <select
-                          className="selection-1"
-                          name="table_id"
-                          value={selectedTableId}
-                          onChange={(e) => setSelectedTableId(e.target.value)}
-                        >
-                          <option value="">Seleccionar mesa</option>
-                          {tables.map((t) => (
-                            <option key={t.table_id ?? t.id} value={t.table_id ?? t.id}>
-                              Mesa {t.table_number ?? (t.table_id ?? t.id)} (cap. {t.capacity ?? "?"})
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                <div className="row">
-                  <div className="col-md-4">
                     <span className="txt9">Name</span>
                     <div className="wrap-inputname size12 bo2 bo-rad-10 m-t-3 m-b-23">
                       <input className="bo-rad-10 sizefull txt10 p-l-20" type="text" name="name" placeholder="Name" />
