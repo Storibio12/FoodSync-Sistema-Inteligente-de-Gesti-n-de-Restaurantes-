@@ -1,11 +1,16 @@
 @import "tailwindcss";
 
-/* Panel admin */
+/* Panel admin - responsive */
 .admin-sidebar {
   width: 260px;
   min-width: 260px;
-  min-height: calc(100vh - 60px);
   flex-shrink: 0;
+}
+@media (max-width: 767px) {
+  .admin-sidebar {
+    min-width: 0;
+    width: 260px;
+  }
 }
 .admin-sidebar .admin-logo-wrap {
   display: flex;
@@ -26,6 +31,7 @@
   word-break: break-word;
   white-space: normal;
   letter-spacing: -0.02em;
+  margin-top: 1.5rem;
 }
 .admin-shell {
   min-height: calc(100vh - 60px);

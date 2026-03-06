@@ -78,7 +78,7 @@ export default function AdminClientsPage() {
     <div className="space-y-6 animate-in fade-in duration-500 pb-20">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 flex-shrink-0 mb-8">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-slate-900">Directorio de Clientes</h1>
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">Directorio de Clientes</h1>
           <p className="text-sm text-slate-500 mt-1">Gestiona la información de contacto de tus comensales frecuentes.</p>
         </div>
         <button
@@ -104,13 +104,13 @@ export default function AdminClientsPage() {
             exit={{ opacity: 0, height: 0, marginBottom: 0 }}
             className="overflow-hidden"
           >
-            <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
-              <h3 className="text-lg font-semibold text-slate-900 mb-4 flex items-center gap-2">
+            <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 sm:p-8">
+              <h3 className="text-lg font-semibold text-slate-900 mb-5 flex items-center gap-2">
                 <Contact className="w-5 h-5 text-[#c0392b]" />
                 {editingId ? "Editar cliente" : "Registrar nuevo cliente"}
               </h3>
 
-              <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4 items-end">
+              <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-5 items-end">
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-1">Nombre completo</label>
                   <input
@@ -135,7 +135,7 @@ export default function AdminClientsPage() {
                   />
                 </div>
 
-                <div className="md:col-span-2 flex justify-end gap-3 mt-2 pt-4 border-t border-slate-100">
+                <div className="md:col-span-2 flex justify-end gap-3 mt-4 pt-5 border-t border-slate-100">
                   <button
                     type="button"
                     onClick={() => { setShowForm(false); setEditingId(null); setForm({ name: "", phone: "" }); }}
@@ -157,7 +157,7 @@ export default function AdminClientsPage() {
       </AnimatePresence>
 
       <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto p-4 sm:p-6">
           <table className="w-full text-sm text-left whitespace-nowrap">
             <thead className="text-xs text-slate-500 uppercase bg-slate-50/80 border-b border-slate-200">
               <tr>

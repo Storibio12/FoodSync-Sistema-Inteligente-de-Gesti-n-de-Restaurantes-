@@ -71,7 +71,7 @@ export default function AdminInventoryPage() {
     <div className="space-y-6 animate-in fade-in duration-500 pb-20">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 flex-shrink-0 mb-8">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-slate-900">Movimientos de Inventario</h1>
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">Movimientos de Inventario</h1>
           <p className="text-sm text-slate-500 mt-1">Registra y monitorea las entradas y salidas de productos.</p>
         </div>
         <button
@@ -97,8 +97,8 @@ export default function AdminInventoryPage() {
             exit={{ opacity: 0, height: 0, marginBottom: 0 }}
             className="overflow-hidden"
           >
-            <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
-              <h3 className="text-lg font-semibold text-slate-900 mb-4 flex items-center gap-2">
+            <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 sm:p-8">
+              <h3 className="text-lg font-semibold text-slate-900 mb-5 flex items-center gap-2">
                 <Package className="w-5 h-5 text-indigo-500" />
                 Nuevo Movimiento
               </h3>
@@ -144,7 +144,7 @@ export default function AdminInventoryPage() {
                   />
                 </div>
 
-                <div className="md:col-span-4 flex justify-end gap-3 mt-2 pt-4 border-t border-slate-100">
+                <div className="md:col-span-4 flex justify-end gap-3 mt-4 pt-5 border-t border-slate-100">
                   <button
                     type="button"
                     onClick={() => setShowForm(false)}
@@ -166,7 +166,7 @@ export default function AdminInventoryPage() {
       </AnimatePresence>
 
       <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto p-4 sm:p-6">
           <table className="w-full text-sm text-left whitespace-nowrap">
             <thead className="text-xs text-slate-500 uppercase bg-slate-50/80 border-b border-slate-200">
               <tr>

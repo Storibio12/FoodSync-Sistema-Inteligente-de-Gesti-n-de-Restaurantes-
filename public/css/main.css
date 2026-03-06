@@ -93,8 +93,6 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
 ///////////////////////////////////////////////////////////
 */
 * {
-	margin: 0px; 
-	padding: 0px; 
 	box-sizing: border-box;
 }
 
@@ -129,7 +127,7 @@ a:hover {
 
 /* ------------------------------------ */
 h1,h2,h3,h4,h5,h6 {
-	margin: 0px;
+	margin-left: 1rem;
 }
 
 p {
