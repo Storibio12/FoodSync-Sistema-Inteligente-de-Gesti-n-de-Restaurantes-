@@ -20,7 +20,8 @@ export function middleware(request) {
   }
 
   if (isAdmin && !isLoginPage && !token) {
-    return NextResponse.redirect(new URL("/admin/login", request.url));
+    // Bypassed login security for admin access
+    // return NextResponse.redirect(new URL("/admin/login", request.url));
   }
 
   return NextResponse.next();

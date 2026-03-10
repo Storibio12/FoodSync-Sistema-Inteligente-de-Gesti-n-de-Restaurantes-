@@ -35,6 +35,9 @@ export default function AdminLoginPage() {
     }
   }
 
+
+  // password = "123456789"
+
   return (
     <div className="min-h-screen flex items-center justify-center p-4 sm:p-6 bg-slate-50">
       <div className="w-full max-w-md">
