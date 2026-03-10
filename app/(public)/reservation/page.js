@@ -124,11 +124,25 @@ export default function ReservationPage() {
     const phone = (form.querySelector('input[name="phone"]')?.value ?? "").trim();
     const email = (form.querySelector('input[name="email"]')?.value ?? "").trim();
 
+    // Read values directly from DOM to sync with Select2 and Daterangepicker 
+    const timeVal = form.querySelector('select[name="time"]')?.value;
+    const peopleVal = form.querySelector('select[name="people"]')?.value;
+    const dateInputStr = form.querySelector('input[name="date"]')?.value;
+
+    let finalDate = date;
+    if (dateInputStr && dateInputStr.includes("/")) {
+      const [day, month, year] = dateInputStr.split("/");
+      finalDate = `${year}-${month}-${day}`;
+    }
+
+    const parsedPeople = parseInt(peopleVal, 10);
+    const finalPeopleCount = Number.isNaN(parsedPeople) ? null : parsedPeople;
+
     if (!name || !phone) {
       setSubmitError("Nombre y teléfono son obligatorios.");
       return;
     }
-    if (!date || !time || !peopleCount) {
+    if (!finalDate || !timeVal || !finalPeopleCount) {
       setSubmitError("Selecciona fecha, hora y número de personas.");
       return;
     }
@@ -138,9 +152,9 @@ export default function ReservationPage() {
       const body = {
         name,
         phone,
-        date,
-        time,
-        people_count: peopleCount,
+        date: finalDate,
+        time: timeVal,
+        people_count: finalPeopleCount,
       };
       if (email) body.email = email;
       if (selectedTableId) body.table_id = Number(selectedTableId);
