@@ -194,7 +194,6 @@ export default function AdminUsersPage() {
           <table className="w-full text-sm text-left whitespace-nowrap">
             <thead className="text-xs text-slate-500 uppercase bg-slate-50/80 border-b border-slate-200">
               <tr>
-                <th scope="col" className="px-6 py-4 font-medium">ID</th>
                 <th scope="col" className="px-6 py-4 font-medium">Nombre</th>
                 <th scope="col" className="px-6 py-4 font-medium">Email</th>
                 <th scope="col" className="px-6 py-4 font-medium">Rol ID</th>
@@ -221,7 +220,6 @@ export default function AdminUsersPage() {
               ) : (
                 list.map((u) => (
                   <tr key={u.user_id ?? u.id} className="hover:bg-slate-50 transition-colors group">
-                    <td className="px-6 py-4 font-medium text-slate-600">#{u.user_id ?? u.id}</td>
                     <td className="px-6 py-4 text-slate-900 font-medium">{u.name ?? "—"}</td>
                     <td className="px-6 py-4 text-slate-600">{u.email ?? "—"}</td>
                     <td className="px-6 py-4">

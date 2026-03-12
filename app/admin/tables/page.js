@@ -34,12 +34,15 @@ export default function AdminTablesPage() {
     setError("");
     const payload = { table_number: Number(form.table_number), capacity: Number(form.capacity) };
     try {
-      if (modal?.id != null) {
-        await adminPatch(`tables/${modal.id}`, payload);
+      if (editingId) {
+        await adminPatch(`tables/${editingId}`, payload);
+        Swal.fire({ title: '¡Actualizada!', text: 'Mesa actualizada con éxito.', icon: 'success', timer: 2000, showConfirmButton: false });
       } else {
         await adminPost("tables", payload);
+        Swal.fire({ title: '¡Creada!', text: 'Mesa registrada con éxito.', icon: 'success', timer: 2000, showConfirmButton: false });
       }
-      setModal(null);
+      setShowForm(false);
+      setEditingId(null);
       setForm({ table_number: "", capacity: "" });
       await load();
     } catch (e) {

@@ -159,9 +159,28 @@ export default function AdminReportsPage() {
                   <FileText className="w-4 h-4 text-indigo-500" />
                   {formatDate(r.date ?? r.report_date)}
                 </h3>
-                <span className="text-xs font-mono text-slate-400 bg-white px-2 py-1 rounded shadow-sm border border-slate-100">
-                  #{r.id ?? r.report_id}
-                </span>
+                <div className="flex items-center gap-3">
+                  <span className="text-xs font-mono text-slate-400 bg-white px-2 py-1 rounded shadow-sm border border-slate-100">
+                    #{r.id ?? r.report_id}
+                  </span>
+                  <button
+                    onClick={async (e) => {
+                      e.stopPropagation();
+                      if (confirm("¿Estás seguro de que deseas eliminar este reporte?")) {
+                        try {
+                          await import("@/app/lib/adminApi").then(m => m.adminDelete(`daily-reports/${r.id ?? r.report_id}`));
+                          load();
+                        } catch (err) {
+                          alert(err.message || "Error al eliminar");
+                        }
+                      }
+                    }}
+                    className="text-red-500 hover:text-red-700 transition-colors p-1"
+                    title="Eliminar reporte"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
               </div>
               <div className="p-5 flex-grow">
                 {r.notes ? (

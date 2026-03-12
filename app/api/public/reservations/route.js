@@ -18,13 +18,26 @@ export async function POST(request) {
       );
     }
 
+    // Clean phone to only digits for WhatsApp compatibility
+    let cleanPhone = phone.replace(/\D/g, "");
+    if (cleanPhone.length === 10) {
+      cleanPhone = "1" + cleanPhone; // Fallback to DR/US country code +1
+    }
+
+    if (cleanPhone.length < 11) {
+      return NextResponse.json(
+        { error: "Por favor, introduce un número de teléfono válido con código de área (ej. 809-XXX-XXXX)." },
+        { status: 400 },
+      );
+    }
+
     const base = API_URL.replace(/\/$/, "");
 
     // 1. Crear cliente
     const clientRes = await fetch(`${base}/clients`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, phone }),
+      body: JSON.stringify({ name, phone: cleanPhone }),
       cache: "no-store",
     });
 

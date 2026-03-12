@@ -46,8 +46,10 @@ export default function AdminShiftsPage() {
     try {
       if (editingId) {
         await adminPatch(`shifts/${editingId}`, payload);
+        Swal.fire({ title: '¡Actualizado!', text: 'El turno se ha actualizado con éxito.', icon: 'success', timer: 2000, showConfirmButton: false });
       } else {
         await adminPost("shifts", payload);
+        Swal.fire({ title: '¡Asignado!', text: 'El nuevo turno se guardó con éxito.', icon: 'success', timer: 2000, showConfirmButton: false });
       }
       setShowForm(false);
       setEditingId(null);
@@ -80,13 +82,14 @@ export default function AdminShiftsPage() {
   }
 
   function openEdit(s) {
-    setModal({ id: s.shift_id ?? s.id });
+    setEditingId(s.shift_id ?? s.id);
     setForm({
       employee_id: String(s.employee_id ?? ""),
       date: (s.date || "").slice(0, 10),
       start_time: (s.start_time || "").slice(0, 5),
       end_time: (s.end_time || "").slice(0, 5),
     });
+    setShowForm(true);
   }
 
   const getEmployeeName = (id) => {

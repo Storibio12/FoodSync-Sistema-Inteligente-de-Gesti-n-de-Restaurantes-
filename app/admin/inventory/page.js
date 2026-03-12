@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { adminGet, adminPost } from "@/app/lib/adminApi";
+import Swal from "sweetalert2";
 import { Package, ArrowDownToLine, ArrowUpFromLine, Plus, X, AlertCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -41,6 +42,7 @@ export default function AdminInventoryPage() {
         movement_type: form.movement_type,
         quantity: Number(form.quantity),
       });
+      Swal.fire({ title: '¡Registrado!', text: 'El movimiento de inventario se guardó con éxito.', icon: 'success', timer: 2000, showConfirmButton: false });
       setShowForm(false);
       setForm({ product_id: "", movement_type: "IN", quantity: "" });
       await load();
