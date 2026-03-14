@@ -10,14 +10,14 @@ export default function AdminReportsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [showForm, setShowForm] = useState(false);
-  const [form, setForm] = useState({ date: "", notes: "" });
+  const [form, setForm] = useState({ date: "", total_sales: "", total_reservations: "", notes: "" });
 
   async function load() {
     setLoading(true);
     setError("");
     try {
       const data = await adminGet("daily-reports");
-      const reports = data?.data?.daily_reports ?? data?.data?.reports ?? (Array.isArray(data) ? data : []);
+      const reports = data?.data?.dailyReports ?? data?.data?.daily_reports ?? data?.data?.reports ?? (Array.isArray(data) ? data : []);
       setList(Array.isArray(reports) ? reports : []);
     } catch (e) {
       setError(e.message || "Error al cargar los reportes");
@@ -32,9 +32,15 @@ export default function AdminReportsPage() {
     e.preventDefault();
     setError("");
     try {
-      await adminPost("daily-reports", { date: form.date, ...(form.notes && { notes: form.notes }) });
+      const payload = {
+        date: form.date,
+        total_sales: Number(form.total_sales) || 0,
+        total_reservations: Number(form.total_reservations) || 0,
+      };
+      if (form.notes) payload.notes = form.notes;
+      await adminPost("daily-reports", payload);
       setShowForm(false);
-      setForm({ date: "", notes: "" });
+      setForm({ date: "", total_sales: "", total_reservations: "", notes: "" });
       await load();
     } catch (e) {
       setError(e.message || "Error al crear reporte");
@@ -99,6 +105,32 @@ export default function AdminReportsPage() {
                     value={form.date}
                     onChange={(e) => setForm((f) => ({ ...f, date: e.target.value }))}
                     required
+                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#c0392b]/50 focus:border-[#c0392b] transition-all"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">Ventas totales</label>
+                  <input
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    value={form.total_sales}
+                    onChange={(e) => setForm((f) => ({ ...f, total_sales: e.target.value }))}
+                    placeholder="0"
+                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#c0392b]/50 focus:border-[#c0392b] transition-all"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">Reservaciones totales</label>
+                  <input
+                    type="number"
+                    min="0"
+                    step="1"
+                    value={form.total_reservations}
+                    onChange={(e) => setForm((f) => ({ ...f, total_reservations: e.target.value }))}
+                    placeholder="0"
                     className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#c0392b]/50 focus:border-[#c0392b] transition-all"
                   />
                 </div>
@@ -182,7 +214,17 @@ export default function AdminReportsPage() {
                   </button>
                 </div>
               </div>
-              <div className="p-5 flex-grow">
+              <div className="p-5 flex-grow space-y-3">
+                <div className="flex flex-wrap gap-4 text-sm">
+                  <span className="text-slate-600">
+                    <span className="font-medium text-slate-800">Ventas:</span>{" "}
+                    {typeof r.total_sales === "number" ? r.total_sales.toLocaleString("es-DO") : (r.total_sales ?? "0")}
+                  </span>
+                  <span className="text-slate-600">
+                    <span className="font-medium text-slate-800">Reservaciones:</span>{" "}
+                    {r.total_reservations ?? "0"}
+                  </span>
+                </div>
                 {r.notes ? (
                   <p className="text-sm text-slate-600 leading-relaxed whitespace-pre-wrap">
                     {r.notes}

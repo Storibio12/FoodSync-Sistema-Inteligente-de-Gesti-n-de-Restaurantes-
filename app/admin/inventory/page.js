@@ -12,7 +12,7 @@ export default function AdminInventoryPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [showForm, setShowForm] = useState(false);
-  const [form, setForm] = useState({ product_id: "", movement_type: "IN", quantity: "" });
+  const [form, setForm] = useState({ product_id: "", movement_type: "entrada", quantity: "" });
 
   async function load() {
     setLoading(true);
@@ -44,7 +44,7 @@ export default function AdminInventoryPage() {
       });
       Swal.fire({ title: '¡Registrado!', text: 'El movimiento de inventario se guardó con éxito.', icon: 'success', timer: 2000, showConfirmButton: false });
       setShowForm(false);
-      setForm({ product_id: "", movement_type: "IN", quantity: "" });
+      setForm({ product_id: "", movement_type: "entrada", quantity: "" });
       await load();
     } catch (e) {
       setError(e.message || "Error al registrar el movimiento");
@@ -128,8 +128,8 @@ export default function AdminInventoryPage() {
                     onChange={(e) => setForm((f) => ({ ...f, movement_type: e.target.value }))}
                     className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all"
                   >
-                    <option value="IN">Entrada (IN)</option>
-                    <option value="OUT">Salida (OUT)</option>
+                    <option value="entrada">Entrada</option>
+                    <option value="salida">Salida</option>
                   </select>
                 </div>
 
@@ -209,7 +209,7 @@ export default function AdminInventoryPage() {
                       </div>
                     </td>
                     <td className="px-6 py-4">
-                      {m.movement_type === "IN" || m.movement_type?.toLowerCase() === "entrada" ? (
+                      {(m.movement_type === "IN" || m.movement_type === "entrada" || m.movement_type?.toLowerCase() === "entrada") ? (
                         <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-emerald-50 text-emerald-700 font-medium text-xs border border-emerald-100/50">
                           <ArrowDownToLine className="w-3.5 h-3.5" /> Entrada
                         </span>
@@ -220,7 +220,7 @@ export default function AdminInventoryPage() {
                       )}
                     </td>
                     <td className="px-6 py-4 text-right font-medium text-slate-900">
-                      {m.movement_type === "IN" ? "+" : "-"}{m.quantity ?? "—"}
+                      {(m.movement_type === "IN" || m.movement_type === "entrada") ? "+" : "-"}{m.quantity ?? "—"}
                     </td>
                     <td className="px-6 py-4 text-right text-slate-600">
                       {formatDate(m.created_at ?? m.date)}
