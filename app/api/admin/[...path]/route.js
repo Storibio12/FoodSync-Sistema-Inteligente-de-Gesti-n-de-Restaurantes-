@@ -46,13 +46,22 @@ async function proxyRequest(request, context, method) {
     return response;
   }
 
+  // 204 / 205 no llevan body — devolverlos directamente evita el error 500
+  if (res.status === 204 || res.status === 205) {
+    return new NextResponse(null, { status: res.status });
+  }
+
   const contentType = res.headers.get("content-type") || "";
   const text = await res.text();
   if (contentType.includes("application/json") && text) {
     try {
       const data = JSON.parse(text);
       return NextResponse.json(data, { status: res.status });
-    } catch (_) {}
+    } catch (_) { }
+  }
+  // Si el body está vacío, devolver solo el status sin intentar poner body
+  if (!text) {
+    return new NextResponse(null, { status: res.status });
   }
   return new NextResponse(text, { status: res.status, headers: { "Content-Type": contentType } });
 }
