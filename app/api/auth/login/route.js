@@ -51,8 +51,18 @@ export async function POST(request) {
       );
     }
 
+    const user = data.data?.user ?? data.user ?? {};
+    const role = user.role === "viewer" ? "viewer" : "admin";
+
     const response = NextResponse.json({ success: true });
     response.cookies.set("admin_token", token, {
+      httpOnly: false,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: 60 * 60 * 24 * 7,
+      path: "/",
+    });
+    response.cookies.set("admin_role", role, {
       httpOnly: false,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",

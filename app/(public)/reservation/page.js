@@ -170,7 +170,7 @@ export default function ReservationPage() {
         setSubmitError(data.error || "No se pudo crear la reserva. Intenta de nuevo.");
         return;
       }
-      setSubmitSuccess(data.message || "Reserva realizada correctamente.");
+      setSubmitSuccess(data.message || "Reserva confirmada. Recibirás confirmación por WhatsApp y correo.");
       form.reset();
       setDate("");
       setTime("");

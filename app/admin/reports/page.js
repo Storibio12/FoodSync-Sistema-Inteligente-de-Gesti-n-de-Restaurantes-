@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { adminGet, adminPost } from "@/app/lib/adminApi";
-import { FileText, Plus, X, AlertCircle } from "lucide-react";
+import { FileText, Plus, X, AlertCircle, Download } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function AdminReportsPage() {
@@ -51,15 +51,33 @@ export default function AdminReportsPage() {
     if (!dateString) return "—";
     try {
       const date = new Date(dateString);
-      // Ensure the date is interpreted as local to avoid timezone shift if it's just YYYY-MM-DD
       const localDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
-      return new Intl.DateTimeFormat('es-DO', {
-        year: 'numeric', month: 'long', day: 'numeric'
+      return new Intl.DateTimeFormat("es-DO", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
       }).format(localDate);
     } catch (e) {
       return dateString;
     }
   };
+
+  function exportCsv() {
+    const headers = ["Fecha", "Ventas totales", "Reservaciones totales"];
+    const rows = list.map((r) => [
+      r.date ?? r.report_date ?? "",
+      r.total_sales ?? 0,
+      r.total_reservations ?? 0,
+    ]);
+    const csv = [headers.join(","), ...rows.map((row) => row.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(","))].join("\n");
+    const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `reportes-diarios-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
 
   return (
     <div className="space-y-6 animate-in fade-in duration-500 pb-20">
@@ -68,13 +86,25 @@ export default function AdminReportsPage() {
           <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">Reportes Diarios</h1>
           <p className="text-sm text-slate-500 mt-1">Consulta y registra los informes del cierre de operaciones.</p>
         </div>
-        <button
-          onClick={() => setShowForm(!showForm)}
-          className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-[#c0392b] text-black text-sm font-medium rounded-lg hover:bg-[#a93226] hover:text-black transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-[#c0392b] focus:ring-offset-2"
-        >
-          {showForm ? <X className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
-          {showForm ? "Cancelar registro" : "Nuevo reporte"}
-        </button>
+        <div className="flex items-center gap-2">
+          {list.length > 0 && (
+            <button
+              type="button"
+              onClick={exportCsv}
+              className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-slate-100 text-slate-700 text-sm font-medium rounded-lg hover:bg-slate-200 transition-colors"
+            >
+              <Download className="w-4 h-4" />
+              Exportar CSV
+            </button>
+          )}
+          <button
+            onClick={() => setShowForm(!showForm)}
+            className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-[#c0392b] text-black text-sm font-medium rounded-lg hover:bg-[#a93226] hover:text-black transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-[#c0392b] focus:ring-offset-2"
+          >
+            {showForm ? <X className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
+            {showForm ? "Cancelar registro" : "Nuevo reporte"}
+          </button>
+        </div>
       </div>
 
       {error && (
@@ -187,9 +217,9 @@ export default function AdminReportsPage() {
               className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-md transition-shadow group flex flex-col h-full"
             >
               <div className="px-5 py-4 border-b border-slate-100 bg-slate-50/50 flex justify-between items-center">
-                <h3 className="font-medium text-slate-900 flex items-center gap-2">
-                  <FileText className="w-4 h-4 text-indigo-500" />
-                  {formatDate(r.date ?? r.report_date)}
+                <h3 className="font-medium text-slate-900 flex items-center gap-2 min-w-0">
+                  <FileText className="w-4 h-4 text-indigo-500 flex-shrink-0" />
+                  <span className="truncate">{formatDate(r.date ?? r.report_date)}</span>
                 </h3>
                 <div className="flex items-center gap-3">
                   <span className="text-xs font-mono text-slate-400 bg-white px-2 py-1 rounded shadow-sm border border-slate-100">

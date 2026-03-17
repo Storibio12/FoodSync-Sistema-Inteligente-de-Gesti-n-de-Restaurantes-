@@ -96,7 +96,7 @@ export default function BookingFormHome() {
         setSubmitError(data.error || "No se pudo crear la reserva. Intenta de nuevo.");
         return;
       }
-      setSubmitSuccess(data.message || "Reserva realizada correctamente.");
+      setSubmitSuccess(data.message || "Reserva confirmada. Recibirás confirmación por WhatsApp y correo.");
       form.reset();
     } catch (err) {
       setSubmitError(err.message || "Error de conexión. Intenta de nuevo.");

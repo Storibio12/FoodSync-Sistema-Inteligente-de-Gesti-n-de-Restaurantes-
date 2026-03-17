@@ -51,6 +51,9 @@ export default function AdminInventoryPage() {
     }
   }
 
+  const LOW_STOCK_THRESHOLD = 10;
+  const lowStockProducts = products.filter(p => (p.stock ?? p.current_stock ?? 0) < LOW_STOCK_THRESHOLD);
+
   const getProductName = (id) => {
     const prod = products.find(p => (p.product_id ?? p.id) == id);
     return prod ? prod.name : "Desconocido";
@@ -71,6 +74,21 @@ export default function AdminInventoryPage() {
 
   return (
     <div className="space-y-6 animate-in fade-in duration-500 pb-20">
+      {lowStockProducts.length > 0 && (
+        <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 flex items-start gap-3">
+          <AlertCircle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
+          <div>
+            <p className="text-sm font-medium text-amber-800">
+              {lowStockProducts.length} producto(s) con stock bajo (menos de {LOW_STOCK_THRESHOLD} unidades).
+            </p>
+            <ul className="text-sm text-amber-700 mt-1 list-disc list-inside">
+              {lowStockProducts.slice(0, 5).map((p) => (
+                <li key={p.product_id ?? p.id}>{p.name} — {p.stock ?? p.current_stock ?? 0} uds.</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      )}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 flex-shrink-0 mb-8">
         <div>
           <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">Movimientos de Inventario</h1>

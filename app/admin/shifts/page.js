@@ -3,7 +3,8 @@
 import { useState, useEffect } from "react";
 import { adminGet, adminPost, adminPatch, adminDelete } from "@/app/lib/adminApi";
 import Swal from "sweetalert2";
-import { Plus, Edit2, Trash2, X, Clock } from "lucide-react";
+import Link from "next/link";
+import { Plus, Edit2, Trash2, X, Clock, TrendingUp, Users } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function AdminShiftsPage() {
@@ -14,17 +15,21 @@ export default function AdminShiftsPage() {
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState(null);
   const [form, setForm] = useState({ employee_id: "", date: "", start_time: "", end_time: "" });
+  const [staffSuggestions, setStaffSuggestions] = useState([]);
 
   async function load() {
     setLoading(true);
     setError("");
     try {
-      const [shiftsData, empData] = await Promise.all([
+      const [shiftsData, empData, analyticsData] = await Promise.all([
         adminGet("shifts"),
         adminGet("employee"),
+        adminGet("analytics/dashboard?days=30").catch(() => null),
       ]);
       setList(Array.isArray(shiftsData) ? shiftsData : (shiftsData?.data?.shifts ?? shiftsData?.data ?? []));
       setEmployees(empData?.data?.employees ?? []);
+      const payload = analyticsData?.data ?? analyticsData ?? {};
+      setStaffSuggestions(payload.suggestions?.staff ?? []);
     } catch (e) {
       setError(e.message || "Error al cargar");
     } finally {
@@ -116,6 +121,37 @@ export default function AdminShiftsPage() {
       {error && (
         <div className="p-4 bg-red-50 text-red-700 border border-red-200 rounded-lg text-sm flex items-center gap-2">
           <X className="w-4 h-4 text-red-500 flex-shrink-0" /> {error}
+        </div>
+      )}
+
+      {staffSuggestions.length > 0 && (
+        <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 sm:p-5">
+          <h2 className="text-sm font-semibold text-slate-800 mb-3 flex items-center gap-2">
+            <TrendingUp className="w-4 h-4 text-[#c0392b]" />
+            Sugerencia desde patrones de consumo
+          </h2>
+          <p className="text-sm text-slate-600 mb-3">
+            Según reservas y ventas recientes, se recomienda reforzar personal en estas franjas:
+          </p>
+          <ul className="space-y-2 mb-4">
+            {staffSuggestions.slice(0, 5).map((s, i) => (
+              <li key={i} className="text-sm text-slate-700 flex items-center gap-2">
+                <Users className="w-4 h-4 text-slate-400 flex-shrink-0" />
+                {s.message}
+              </li>
+            ))}
+          </ul>
+          <button
+            type="button"
+            onClick={() => { setShowForm(true); setEditingId(null); setForm({ employee_id: "", date: "", start_time: "", end_time: "" }); }}
+            className="inline-flex items-center gap-2 px-3 py-2 bg-[#c0392b] text-black text-sm font-medium rounded-lg hover:bg-[#a93226]"
+          >
+            <Plus className="w-4 h-4" />
+            Asignar turno
+          </button>
+          <span className="ml-2 text-sm text-slate-500">
+            o <Link href="/admin/analytics" className="text-[#c0392b] hover:underline">ver más patrones</Link>
+          </span>
         </div>
       )}
 

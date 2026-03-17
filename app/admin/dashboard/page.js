@@ -20,19 +20,27 @@ export const metadata = {
 };
 
 export default async function AdminDashboardPage() {
-  const [reservationsData, reportsData, salesData] = await Promise.all([
+  const [reservationsData, reportsData, salesData, kpisData] = await Promise.all([
     fetchAdmin("reservations").catch(() => null),
     fetchAdmin("daily-reports").catch(() => null),
     fetchAdmin("sales").catch(() => null),
+    fetchAdmin("analytics/kpis").catch(() => null),
   ]);
 
   const reservations = reservationsData?.data?.reservations || [];
   const reports = reportsData?.data?.daily_reports || reportsData?.data?.reports || (Array.isArray(reportsData) ? reportsData : []);
   const sales = Array.isArray(salesData) ? salesData : salesData?.data?.sales || [];
+  const kpis = kpisData?.data ?? kpisData ?? {};
 
   const recentReservations = reservations.slice(0, 5);
   const recentReports = Array.isArray(reports) ? reports.slice(0, 3) : [];
   const recentSales = sales.slice(0, 5);
+
+  const reservationsToday = kpis.reservationsToday ?? 0;
+  const salesThisMonthCount = kpis.salesThisMonthCount ?? 0;
+  const salesThisMonthRevenue = kpis.salesThisMonthRevenue ?? 0;
+  const lowStockCount = kpis.lowStockCount ?? 0;
+  const lowStockProducts = kpis.lowStockProducts || [];
 
   return (
     <div className="space-y-6 sm:space-y-8 w-full min-w-0">
@@ -40,6 +48,47 @@ export default async function AdminDashboardPage() {
         <h1 className="text-xl sm:text-2xl font-bold text-slate-900">Dashboard</h1>
         <p className="text-sm text-slate-500 mt-1">Resumen del panel. Accede a cada módulo desde el menú lateral.</p>
       </div>
+
+      {/* KPIs */}
+      <section aria-label="Indicadores clave" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
+          <p className="text-xs font-medium uppercase tracking-wider text-slate-500">Reservas hoy</p>
+          <p className="text-2xl font-bold text-slate-900 mt-1">{reservationsToday}</p>
+          <Link href="/admin/reservations" className="text-sm text-[#c0392b] hover:underline mt-1 inline-block">Ver reservas</Link>
+        </div>
+        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
+          <p className="text-xs font-medium uppercase tracking-wider text-slate-500">Ventas del mes</p>
+          <p className="text-2xl font-bold text-slate-900 mt-1">{salesThisMonthCount}</p>
+          <p className="text-sm text-slate-600">{Number(salesThisMonthRevenue).toLocaleString("es-DO")} $</p>
+          <Link href="/admin/sales" className="text-sm text-[#c0392b] hover:underline mt-1 inline-block">Ver ventas</Link>
+        </div>
+        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
+          <p className="text-xs font-medium uppercase tracking-wider text-slate-500">Productos a reponer</p>
+          <p className="text-2xl font-bold text-slate-900 mt-1">{lowStockCount}</p>
+          {lowStockCount > 0 && (
+            <Link href="/admin/inventory" className="text-sm text-amber-600 hover:underline mt-1 inline-block">Revisar inventario</Link>
+          )}
+        </div>
+        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
+          <p className="text-xs font-medium uppercase tracking-wider text-slate-500">Reportes</p>
+          <p className="text-2xl font-bold text-slate-900 mt-1">{Array.isArray(reports) ? reports.length : 0}</p>
+          <Link href="/admin/reports" className="text-sm text-[#c0392b] hover:underline mt-1 inline-block">Ver reportes</Link>
+        </div>
+      </section>
+
+      {lowStockCount > 0 && lowStockProducts.length > 0 && (
+        <section className="bg-amber-50 border border-amber-200 rounded-xl p-4">
+          <h2 className="text-sm font-semibold text-amber-800 mb-2">Stock bajo</h2>
+          <ul className="text-sm text-amber-800 space-y-1">
+            {lowStockProducts.slice(0, 5).map((p) => (
+              <li key={p.product_id ?? p.id}>
+                {p.name ?? "Producto"} — stock: {p.stock ?? "—"}
+              </li>
+            ))}
+          </ul>
+          <Link href="/admin/inventory" className="text-sm font-medium text-amber-700 hover:underline mt-2 inline-block">Ver todo el inventario</Link>
+        </section>
+      )}
 
       {/* Resumen reciente */}
       <section aria-label="Resumen reciente">
@@ -99,6 +148,15 @@ export default async function AdminDashboardPage() {
         </div>
       </section>
 
+      <section aria-label="Análisis">
+        <Link
+          href="/admin/analytics"
+          className="inline-flex items-center gap-2 px-4 py-3 bg-slate-100 hover:bg-slate-200 rounded-xl text-slate-700 text-sm font-medium transition-colors"
+        >
+          Ver patrones de consumo (reservas, ventas, inventario)
+          <span aria-hidden>→</span>
+        </Link>
+      </section>
     </div>
   );
 }
