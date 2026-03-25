@@ -7,13 +7,18 @@ const BASE = "/api/admin";
 
 export async function adminFetch(path, options = {}) {
   const url = path.startsWith("/") ? `${BASE}${path}` : `${BASE}/${path}`;
+  const timeoutMs = Number(options.timeoutMs) || 15000;
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
   const res = await fetch(url, {
     ...options,
+    signal: controller.signal,
     headers: {
       "Content-Type": "application/json",
       ...options.headers,
     },
   });
+  clearTimeout(timeoutId);
   if (res.status === 401) {
     if (typeof window !== "undefined") {
       window.location.href = "/admin/login";

@@ -45,11 +45,12 @@ export async function fetchWithAuth(path, options = {}, request) {
   const token = request ? getAdminTokenFromRequest(request) : null;
   const baseUrl = getApiUrl();
   const url = path.startsWith("http") ? path : `${baseUrl.replace(/\/$/, "")}/${path.replace(/^\//, "")}`;
+  const hasBody = options.body !== undefined && options.body !== null;
   const res = await fetch(url, {
     cache: "no-store",
     ...options,
     headers: {
-      "Content-Type": "application/json",
+      ...(hasBody ? { "Content-Type": "application/json" } : {}),
       ...getAuthHeaders(token),
       ...options.headers,
     },

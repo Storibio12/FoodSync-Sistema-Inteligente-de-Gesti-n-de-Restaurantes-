@@ -19,9 +19,9 @@ export function middleware(request) {
   //   return NextResponse.redirect(new URL("/admin/dashboard", request.url));
   // }
 
-  // if (isAdmin && !isLoginPage && !token) {
-  //   return NextResponse.redirect(new URL("/admin/login", request.url));
-  // }
+  if (isAdmin && !isLoginPage && !token) {
+    return NextResponse.redirect(new URL("/admin/login", request.url));
+  }
 
   return NextResponse.next();
 }

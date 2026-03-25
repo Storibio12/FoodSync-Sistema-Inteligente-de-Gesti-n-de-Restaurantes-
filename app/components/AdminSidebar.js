@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState, useEffect } from "react";
 import { X } from "lucide-react";
 import {
   LayoutDashboard,
@@ -12,27 +13,40 @@ import {
   Package,
   ShoppingCart,
   BarChart3,
+  TrendingUp,
   UserCircle,
   Clock,
   Lock,
 } from "lucide-react";
 
-const items = [
-  { href: "/admin/dashboard", label: "Dashboard", Icon: LayoutDashboard },
-  { href: "/admin/reservations", label: "Reservaciones", Icon: CalendarDays },
-  { href: "/admin/clients", label: "Clientes", Icon: Users },
-  { href: "/admin/tables", label: "Mesas", Icon: Utensils },
-  { href: "/admin/menu", label: "Menú", Icon: MenuSquare },
-  { href: "/admin/inventory", label: "Inventario", Icon: Package },
-  { href: "/admin/sales", label: "Ventas", Icon: ShoppingCart },
-  { href: "/admin/reports", label: "Reportes", Icon: BarChart3 },
-  { href: "/admin/employees", label: "Empleados", Icon: UserCircle },
-  { href: "/admin/shifts", label: "Turnos", Icon: Clock },
-  { href: "/admin/users", label: "Usuarios", Icon: Lock },
+const allItems = [
+  { href: "/admin/dashboard", label: "Dashboard", Icon: LayoutDashboard, roles: ["admin", "viewer"] },
+  { href: "/admin/reservations", label: "Reservaciones", Icon: CalendarDays, roles: ["admin"] },
+  { href: "/admin/clients", label: "Clientes", Icon: Users, roles: ["admin"] },
+  { href: "/admin/tables", label: "Mesas", Icon: Utensils, roles: ["admin"] },
+  { href: "/admin/menu", label: "Menú", Icon: MenuSquare, roles: ["admin"] },
+  { href: "/admin/inventory", label: "Inventario", Icon: Package, roles: ["admin"] },
+  { href: "/admin/sales", label: "Ventas", Icon: ShoppingCart, roles: ["admin"] },
+  { href: "/admin/reports", label: "Reportes", Icon: BarChart3, roles: ["admin", "viewer"] },
+  { href: "/admin/analytics", label: "Patrones de consumo", Icon: TrendingUp, roles: ["admin", "viewer"] },
+  { href: "/admin/employees", label: "Empleados", Icon: UserCircle, roles: ["admin"] },
+  { href: "/admin/shifts", label: "Turnos", Icon: Clock, roles: ["admin"] },
+  { href: "/admin/users", label: "Usuarios", Icon: Lock, roles: ["admin"] },
 ];
+
+function getAdminRole() {
+  if (typeof document === "undefined") return "admin";
+  const match = document.cookie.split("; ").find((row) => row.startsWith("admin_role="));
+  return match ? decodeURIComponent(match.split("=")[1] || "admin") : "admin";
+}
 
 export default function AdminSidebar({ open, onClose }) {
   const pathname = usePathname();
+  const [role, setRole] = useState("admin");
+  useEffect(() => {
+    setRole(getAdminRole());
+  }, []);
+  const items = allItems.filter((item) => item.roles.includes(role));
 
   return (
     <aside
