@@ -43,7 +43,7 @@ export default function Home() {
           <div className="row">
             <div className="col-md-6 p-t-45 p-b-30">
               <div className="wrap-text-welcome t-center">
-                <span className="tit2 t-center">Italian Restaurant</span>
+                <span className="tit2 t-center">FoodSync Restaurant</span>
                 <h3 className="tit3 t-center m-b-35 m-t-5">Welcome</h3>
                 <p className="t-center m-b-22 size3 m-l-r-auto">
                   Donec quis lorem nulla. Nunc eu odio mi. Morbi nec lobortis est. Sed fringilla, nunc sed imperdiet lacinia, nisl ante egestas mi, ac facilisis ligula sem id neque.

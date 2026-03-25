@@ -3,6 +3,7 @@ import Header from "./Header";
 import Sidebar from "./Sidebar";
 import Footer from "./Footer";
 import ScriptsInit from "./ScriptsInit";
+import ChatbotFAQ from "./ChatbotFAQ";
 
 export default function DefaultLayout({ children }) {
   return (
@@ -13,6 +14,8 @@ export default function DefaultLayout({ children }) {
       {children}
 
       <Footer />
+
+      <ChatbotFAQ />
 
       <div className="btn-back-to-top bg0-hov" id="myBtn">
         <span className="symbol-btn-back-to-top">
