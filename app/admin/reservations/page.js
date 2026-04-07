@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { adminGet, adminPatch } from "@/app/lib/adminApi";
-import { CalendarRange, CheckCircle, XCircle, Clock, Users, MapPin, AlertCircle, Ban } from "lucide-react";
+import { CalendarRange, CheckCircle, Clock, Users, MapPin, AlertCircle, Ban, Banknote } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Swal from "sweetalert2";
 
@@ -111,6 +111,51 @@ export default function AdminReservationsPage() {
     }
   }
 
+  async function completeVisit(id) {
+    const result = await Swal.fire({
+      title: "Registrar consumo",
+      text: "Indica el monto total consumido (DOP). Se cerrará la visita y se registrará en ventas.",
+      input: "number",
+      inputPlaceholder: "0.00",
+      inputAttributes: { min: 0, step: "0.01" },
+      showCancelButton: true,
+      confirmButtonText: "Registrar y cerrar",
+      cancelButtonText: "Volver",
+      confirmButtonColor: "#6366f1",
+      cancelButtonColor: "#64748b",
+      inputValidator: (value) => {
+        if (value === "" || value === null || value === undefined) {
+          return "Introduce un monto.";
+        }
+        const n = parseFloat(String(value).replace(",", "."), 10);
+        if (Number.isNaN(n) || n < 0) {
+          return "El monto debe ser mayor o igual a 0.";
+        }
+        return null;
+      },
+    });
+
+    if (!result.isConfirmed || result.value === undefined) return;
+
+    const total = parseFloat(String(result.value).replace(",", "."), 10);
+    setActioning(id);
+    try {
+      await adminPatch(`reservations/${id}/complete`, { total });
+      await Swal.fire({
+        title: "Visita cerrada",
+        text: "El consumo quedó registrado y aparecerá en Ventas.",
+        icon: "success",
+        timer: 2200,
+        showConfirmButton: false,
+      });
+      await load();
+    } catch (e) {
+      Swal.fire("Error", e.message || "No se pudo registrar el consumo.", "error");
+    } finally {
+      setActioning(null);
+    }
+  }
+
   const formatDate = (dateString) => {
     if (!dateString) return "—";
     try {
@@ -134,6 +179,7 @@ export default function AdminReservationsPage() {
       case 'confirmed': return 'bg-emerald-100 text-emerald-700 border-emerald-200';
       case 'cancelled': case 'canceled': return 'bg-red-100 text-red-700 border-red-200';
       case 'pending': return 'bg-amber-100 text-amber-700 border-amber-200';
+      case 'completed': case 'closed': return 'bg-indigo-100 text-indigo-800 border-indigo-200';
       default: return 'bg-slate-100 text-slate-700 border-slate-200';
     }
   };
@@ -143,6 +189,8 @@ export default function AdminReservationsPage() {
       case 'confirmed': return 'Confirmada';
       case 'cancelled': case 'canceled': return 'Cancelada';
       case 'pending': return 'Pendiente';
+      case 'completed': return 'Completada';
+      case 'closed': return 'Cerrada';
       default: return status;
     }
   };
@@ -188,6 +236,8 @@ export default function AdminReservationsPage() {
               const status = (r.status || "pending").toLowerCase();
               const isCancelled = status === "cancelled" || status === "canceled";
               const isPending = status === "pending";
+              const isConfirmed = status === "confirmed";
+              const isCompleted = status === "completed" || status === "closed";
 
               return (
                 <motion.div
@@ -244,6 +294,19 @@ export default function AdminReservationsPage() {
                         className="inline-flex flex-1 justify-center items-center gap-2 px-4 py-2 bg-slate-200 text-slate-700 text-sm font-medium rounded-lg hover:bg-slate-300 transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 disabled:opacity-50"
                       >
                         <Ban className="w-4 h-4" /> Cancelar
+                      </button>
+                    </div>
+                  )}
+
+                  {isConfirmed && !isCancelled && !isCompleted && (
+                    <div className="p-4 bg-slate-50 border-t border-slate-100 flex gap-3 justify-end items-center mt-auto">
+                      <button
+                        type="button"
+                        onClick={() => completeVisit(id)}
+                        disabled={actioning === id}
+                        className="inline-flex w-full justify-center items-center gap-2 px-4 py-2 bg-slate-200 text-slate-700 text-sm font-medium rounded-lg hover:bg-indigo-600 transition-all shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50"
+                      >
+                        <Banknote className="w-4 h-4" /> Registrar consumo
                       </button>
                     </div>
                   )}

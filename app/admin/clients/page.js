@@ -5,6 +5,7 @@ import { adminGet, adminPost, adminPatch, adminDelete } from "@/app/lib/adminApi
 import Swal from "sweetalert2";
 import { Plus, Edit2, Trash2, X, Contact } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 export default function AdminClientsPage() {
   const [list, setList] = useState([]);
@@ -13,6 +14,7 @@ export default function AdminClientsPage() {
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState(null);
   const [form, setForm] = useState({ name: "", phone: "" });
+  const router = useRouter();
 
   async function load() {
     setLoading(true);
@@ -66,6 +68,8 @@ export default function AdminClientsPage() {
     } catch (e) {
       setError(e.message || "Error al eliminar");
     }
+
+    router.refresh();
   }
 
   function openEdit(client) {
